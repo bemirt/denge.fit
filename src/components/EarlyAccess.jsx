@@ -1,0 +1,39 @@
+function EarlyAccess() {
+  return (
+    <section id="basla" className="px-5 py-16 md:px-6 md:py-20">
+      <div className="mx-auto max-w-4xl rounded-[40px] border border-[var(--color-border)] bg-white p-8 text-center md:p-14">
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-[var(--color-text-soft)]">
+          erken erişim
+        </p>
+
+        <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] md:text-5xl">
+          denge.fit yolculuğunun başındayız.
+          <span className="block">ilk duyanlardan biri ol.</span>
+        </h2>
+
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[var(--color-text-soft)]">
+          şu an ilk versiyonu inşa ediyoruz. yakında daha güçlü yönlendirme yapıları, içerikler ve araçlarla
+          büyüyeceğiz.
+        </p>
+
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="mailto:hello@denge.fit"
+            className="inline-flex min-w-[210px] items-center justify-center rounded-full bg-[var(--color-text)] px-6 py-3 text-sm font-semibold !text-white whitespace-nowrap transition hover:opacity-90"
+          >
+            hello@denge.fit
+          </a>
+
+          <a
+            href="#"
+            className="inline-flex min-w-[210px] items-center justify-center rounded-full border border-[var(--color-border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--color-text)] transition hover:bg-[var(--color-surface)]"
+          >
+            instagram yakında
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default EarlyAccess
