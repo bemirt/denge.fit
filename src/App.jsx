@@ -3,6 +3,9 @@ import { Routes, Route, Link } from "react-router-dom";
 import Calculator from "./components/Calculator";
 import WaterCalculator from "./components/WaterCalculator";
 
+const WHATSAPP_LINK =
+  "https://wa.me/905050727306?text=merhaba%20denge.fit%20üzerinden%20yazıyorum";
+
 const guideLibrary = [
   {
     title: "insülin direnci olanlar için günlük beslenme",
@@ -53,6 +56,189 @@ const guideLibrary = [
     accent: "from-teal-100 to-emerald-50",
   },
 ];
+
+function MiniForm() {
+  const [form, setForm] = useState({
+    age: "",
+    height: "",
+    weight: "",
+    goal: "",
+    struggle: "",
+  });
+
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const message = `Merhaba, denge.fit üzerinden mini form doldurdum.
+
+Yaş: ${form.age}
+Boy: ${form.height} cm
+Kilo: ${form.weight} kg
+Hedef: ${form.goal}
+Zorlandığım konu: ${form.struggle}
+
+Detaylı destek almak istiyorum.`;
+
+    const url = `https://wa.me/905050727306?text=${encodeURIComponent(
+      message
+    )}`;
+
+    window.open(url, "_blank");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <div>
+        <label className="mb-2 block text-sm font-medium text-neutral-700">
+          yaş
+        </label>
+        <input
+          name="age"
+          placeholder="ör. 30"
+          value={form.age}
+          onChange={handleChange}
+          required
+          className="w-full rounded-xl border border-black/10 px-3 py-3 outline-none transition focus:border-neutral-400"
+        />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-2 block text-sm font-medium text-neutral-700">
+            boy
+          </label>
+          <input
+            name="height"
+            placeholder="cm"
+            value={form.height}
+            onChange={handleChange}
+            required
+            className="w-full rounded-xl border border-black/10 px-3 py-3 outline-none transition focus:border-neutral-400"
+          />
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-medium text-neutral-700">
+            kilo
+          </label>
+          <input
+            name="weight"
+            placeholder="kg"
+            value={form.weight}
+            onChange={handleChange}
+            required
+            className="w-full rounded-xl border border-black/10 px-3 py-3 outline-none transition focus:border-neutral-400"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="mb-2 block text-sm font-medium text-neutral-700">
+          hedefin ne?
+        </label>
+        <select
+          name="goal"
+          value={form.goal}
+          onChange={handleChange}
+          required
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-3 outline-none transition focus:border-neutral-400"
+        >
+          <option value="">seç</option>
+          <option value="kilo vermek">kilo vermek</option>
+          <option value="sağlıklı beslenmek">sağlıklı beslenmek</option>
+          <option value="kas yapmak">kas yapmak</option>
+          <option value="yeme davranışımı kontrol etmek">
+            yeme davranışımı kontrol etmek
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label className="mb-2 block text-sm font-medium text-neutral-700">
+          en çok nerede zorlanıyorsun?
+        </label>
+        <select
+          name="struggle"
+          value={form.struggle}
+          onChange={handleChange}
+          required
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-3 outline-none transition focus:border-neutral-400"
+        >
+          <option value="">seç</option>
+          <option value="gece yeme">gece yeme</option>
+          <option value="stres yeme">stres yeme</option>
+          <option value="tatlı krizi">tatlı krizi</option>
+          <option value="kontrol kaybı / duygusal yeme">
+            kontrol kaybı / duygusal yeme
+          </option>
+        </select>
+      </div>
+
+      <button
+        type="submit"
+        className="w-full rounded-xl bg-neutral-900 py-3 text-sm font-medium text-white transition hover:opacity-90"
+      >
+        whatsapp’a gönder
+      </button>
+
+      <p className="text-xs leading-6 text-neutral-500">
+        butona bastığında bilgiler hazır mesaj olarak WhatsApp ekranında açılır.
+      </p>
+    </form>
+  );
+}
+
+function MidCTA() {
+  return (
+    <div className="mt-10 rounded-3xl bg-neutral-900 p-6 text-white">
+      <h3 className="text-xl font-semibold">bu döngüden çıkmak istiyorsan</h3>
+      <p className="mt-3 text-sm leading-6 text-white/80">
+        sana uygun beslenme düzenini birlikte netleştirebiliriz. hızlıca yaz,
+        nasıl ilerleyebileceğimizi söyleyelim.
+      </p>
+
+      <a
+        href={WHATSAPP_LINK}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-5 inline-block rounded-xl bg-white px-5 py-3 text-sm font-medium text-black transition hover:opacity-90"
+      >
+        whatsapp&apos;tan yaz
+      </a>
+    </div>
+  );
+}
+
+function BottomCTA() {
+  return (
+    <div className="mt-12 rounded-3xl border border-black/10 bg-[#f6f1e8] p-6">
+      <h3 className="text-xl font-semibold">
+        tek başına çözmek zorunda değilsin
+      </h3>
+
+      <p className="mt-3 leading-7 text-neutral-700">
+        sürekli başa dönüyorsan sorun sende değil, sistemde. sana uygun
+        sürdürülebilir bir plan oluşturabiliriz.
+      </p>
+
+      <a
+        href={WHATSAPP_LINK}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-5 inline-block rounded-xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+      >
+        benim için uygun mu öğren
+      </a>
+    </div>
+  );
+}
 
 function getRelatedGuides(currentSlug, limit = 3) {
   const currentGuide = guideLibrary.find((guide) => guide.slug === currentSlug);
@@ -129,6 +315,33 @@ function RelatedGuides({ currentSlug }) {
         ))}
       </div>
     </section>
+  );
+}
+
+function GuideCard({ guide }) {
+  return (
+    <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+      <div className={`h-28 bg-gradient-to-br ${guide.accent}`} />
+      <div className="p-5">
+        <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+          {guide.tag}
+        </span>
+
+        <h3 className="mt-4 text-lg font-medium leading-snug">{guide.title}</h3>
+        <p className="mt-2 text-sm leading-6 text-neutral-600">{guide.desc}</p>
+
+        {guide.live ? (
+          <Link
+            to={guide.slug}
+            className="mt-4 inline-block text-sm font-medium underline underline-offset-4"
+          >
+            rehberi oku
+          </Link>
+        ) : (
+          <p className="mt-4 text-sm text-neutral-400">yakında yayında</p>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -342,34 +555,60 @@ function Home() {
           </div>
         </div>
       </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
+        <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
+          <div className="rounded-[2rem] bg-[#ebe3d7] p-6 md:p-8">
+            <span className="text-sm font-medium text-neutral-500">
+              kişiye daha uygun başlangıç
+            </span>
+
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight">
+              sana uygun beslenme desteğini bul
+            </h2>
+
+            <p className="mt-4 leading-7 text-neutral-700">
+              herkes için aynı plan çalışmaz. birkaç kısa soruyla seni daha
+              doğru şekilde yönlendirebiliriz. özellikle duygusal yeme, kontrol
+              kaybı ve sürdürülebilir düzen kurma tarafında daha doğru ilk temas
+              fark yaratır.
+            </p>
+
+            <div className="mt-6 space-y-3 text-sm text-neutral-700">
+              <p>• hedefe göre yönlendirme</p>
+              <p>• duygusal yeme / kontrol kaybı ayrımı</p>
+              <p>• direkt whatsapp üzerinden hızlı iletişim</p>
+            </div>
+
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-6 inline-block rounded-xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+            >
+              direkt whatsapp’tan yaz
+            </a>
+          </div>
+
+          <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-sm md:p-8">
+            <div className="mb-5">
+              <span className="text-sm font-medium text-neutral-500">
+                mini yönlendirme formu
+              </span>
+              <h3 className="mt-2 text-2xl font-semibold tracking-tight">
+                birkaç kısa soruyla başlayalım
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-neutral-600">
+                formu doldurduğunda bilgiler hazır mesaj olarak senin WhatsApp
+                hattına düşer. böylece ilk yönlendirme kontrolü sende olur.
+              </p>
+            </div>
+
+            <MiniForm />
+          </div>
+        </div>
+      </section>
     </main>
-  );
-}
-
-function GuideCard({ guide }) {
-  return (
-    <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
-      <div className={`h-28 bg-gradient-to-br ${guide.accent}`} />
-      <div className="p-5">
-        <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
-          {guide.tag}
-        </span>
-
-        <h3 className="mt-4 text-lg font-medium leading-snug">{guide.title}</h3>
-        <p className="mt-2 text-sm leading-6 text-neutral-600">{guide.desc}</p>
-
-        {guide.live ? (
-          <Link
-            to={guide.slug}
-            className="mt-4 inline-block text-sm font-medium underline underline-offset-4"
-          >
-            rehberi oku
-          </Link>
-        ) : (
-          <p className="mt-4 text-sm text-neutral-400">yakında yayında</p>
-        )}
-      </div>
-    </div>
   );
 }
 
@@ -534,8 +773,16 @@ function Contact() {
         <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-sm md:p-8">
           <h2 className="text-xl font-semibold">iletişim bilgileri</h2>
           <div className="mt-5 space-y-3 text-neutral-700">
-            <p>denge.fit@protonmail.com</p>
-            <p>@denge.fit</p>
+            <p>📧 denge.fit@protonmail.com</p>
+            <p>📷 @denge.fit</p>
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block pt-2 text-sm font-medium underline underline-offset-4"
+            >
+              💬 whatsapp&apos;tan yaz
+            </a>
           </div>
         </div>
 
@@ -594,6 +841,8 @@ function GuideArticleInsulin() {
               </p>
             </section>
 
+            <MidCTA />
+
             <section>
               <h2 className="text-2xl font-semibold tracking-tight">
                 en sık yapılan hatalar
@@ -607,14 +856,18 @@ function GuideArticleInsulin() {
                   </p>
                 </div>
                 <div className="rounded-2xl bg-[#f7f4ee] p-4">
-                  <h3 className="font-medium">öğünleri protein yönünden zayıf kurmak</h3>
+                  <h3 className="font-medium">
+                    öğünleri protein yönünden zayıf kurmak
+                  </h3>
                   <p className="mt-2 text-sm leading-6 text-neutral-600">
                     sadece karbonhidrat ağırlıklı öğünler daha hızlı acıkmaya
                     neden olabilir.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-[#f7f4ee] p-4">
-                  <h3 className="font-medium">akşam tatlı krizini gün boyu biriktirmek</h3>
+                  <h3 className="font-medium">
+                    akşam tatlı krizini gün boyu biriktirmek
+                  </h3>
                   <p className="mt-2 text-sm leading-6 text-neutral-600">
                     gündüz yetersiz beslenme, akşam yüksek iştah olarak geri
                     dönebilir.
@@ -663,6 +916,8 @@ function GuideArticleInsulin() {
                 için uzman desteği alınmalıdır.
               </p>
             </section>
+
+            <BottomCTA />
           </div>
         </div>
       </article>
@@ -714,6 +969,8 @@ function GuideArticleSweet() {
               </p>
             </section>
 
+            <MidCTA />
+
             <section>
               <h2 className="text-2xl font-semibold tracking-tight">
                 en sık yapılan yanlışlar
@@ -734,7 +991,9 @@ function GuideArticleSweet() {
                   </p>
                 </div>
                 <div className="rounded-2xl bg-[#f7f4ee] p-4">
-                  <h3 className="font-medium">stres ve uykuyu görmezden gelmek</h3>
+                  <h3 className="font-medium">
+                    stres ve uykuyu görmezden gelmek
+                  </h3>
                   <p className="mt-2 text-sm leading-6 text-neutral-600">
                     sadece besine odaklanıp yaşam düzenini unutmak sorunu eksik
                     çözmeye yol açar.
@@ -778,6 +1037,8 @@ function GuideArticleSweet() {
                 durumunuz ve özel ihtiyaçlarınız için uzman desteği alınmalıdır.
               </p>
             </section>
+
+            <BottomCTA />
           </div>
         </div>
       </article>
@@ -829,6 +1090,8 @@ function GuideArticleDesk() {
                 tüketimini ve hareket molalarını ihmal eder.
               </p>
             </section>
+
+            <MidCTA />
 
             <section>
               <h2 className="text-2xl font-semibold tracking-tight">
@@ -894,6 +1157,8 @@ function GuideArticleDesk() {
                 desteği daha doğru sonuç verir.
               </p>
             </section>
+
+            <BottomCTA />
           </div>
         </div>
       </article>
@@ -1002,8 +1267,16 @@ function Footer() {
             iletişim
           </h4>
           <div className="mt-3 space-y-2 text-sm text-neutral-700">
-            <p>denge.fit@protonmail.com</p>
-            <p>@denge.fit</p>
+            <p>📧 denge.fit@protonmail.com</p>
+            <p>📷 @denge.fit</p>
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block pt-1 underline underline-offset-4"
+            >
+              💬 whatsapp
+            </a>
           </div>
         </div>
       </div>
