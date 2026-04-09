@@ -1,886 +1,1046 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Calculator from "./components/Calculator";
+import WaterCalculator from "./components/WaterCalculator";
 
-function getCurrentRoute() {
-  const hash = window.location.hash || "#/";
-  return hash.replace("#", "") || "/";
-}
+const guideLibrary = [
+  {
+    title: "insülin direnci olanlar için günlük beslenme",
+    desc: "kan şekeri dalgalanmalarını azaltmaya yardımcı olabilecek pratik beslenme düzeni.",
+    slug: "/rehberler/insulin-direnci-gunluk-beslenme",
+    live: true,
+    tag: "kan şekeri dengesi",
+    accent: "from-emerald-100 to-lime-50",
+  },
+  {
+    title: "insülin direncinde tatlı isteği nasıl azaltılır",
+    desc: "sürekli gelen tatlı krizlerini daha sürdürülebilir şekilde yönetmenin yolları.",
+    slug: "/rehberler/tatli-istegi-nasil-azaltilir",
+    live: true,
+    tag: "kan şekeri dengesi",
+    accent: "from-amber-100 to-orange-50",
+  },
+  {
+    title: "masa başı çalışanlarda en sık yapılan beslenme hataları",
+    desc: "hareketsiz yaşamla birlikte sık görülen günlük beslenme problemleri.",
+    slug: "/rehberler/masa-basi-beslenme-hatalari",
+    live: true,
+    tag: "günlük yaşam",
+    accent: "from-sky-100 to-cyan-50",
+  },
+  {
+    title: "gebelik planlayan kadınlar için beslenme",
+    desc: "gebelik öncesinde dikkat edilmesi gereken temel beslenme yaklaşımı.",
+    slug: "#",
+    live: false,
+    tag: "kadın sağlığı",
+    accent: "from-rose-100 to-pink-50",
+  },
+  {
+    title: "pcos’ta beslenme yaklaşımı",
+    desc: "hormonal dengeyi desteklemeye yönelik temel beslenme prensipleri.",
+    slug: "#",
+    live: false,
+    tag: "kadın sağlığı",
+    accent: "from-violet-100 to-fuchsia-50",
+  },
+  {
+    title: "şişkinlik yaşayanlar için günlük beslenme önerileri",
+    desc: "günlük hayatta uygulanabilecek sade ve pratik düzen önerileri.",
+    slug: "#",
+    live: false,
+    tag: "bağırsak sağlığı",
+    accent: "from-teal-100 to-emerald-50",
+  },
+];
 
-function NavLink({ to, children }) {
-  const currentRoute = getCurrentRoute();
-  const isActive =
-    currentRoute === to ||
-    (to === "/rehberler" && currentRoute.startsWith("/rehber/"));
+function getRelatedGuides(currentSlug, limit = 3) {
+  const currentGuide = guideLibrary.find((guide) => guide.slug === currentSlug);
 
-  return (
-    <a
-      href={`#${to}`}
-      className={`transition ${
-        isActive ? "text-black font-semibold" : "text-gray-500 hover:text-black"
-      }`}
-    >
-      {children}
-    </a>
+  if (!currentGuide) {
+    return guideLibrary.filter((guide) => guide.live).slice(0, limit);
+  }
+
+  const sameTag = guideLibrary.filter(
+    (guide) =>
+      guide.slug !== currentSlug &&
+      guide.live &&
+      guide.tag === currentGuide.tag
   );
-}
 
-function Layout({ children }) {
-  return (
-    <div className="min-h-screen bg-[#f8f6f1] text-gray-900">
-      <header className="sticky top-0 z-50 border-b border-black/5 bg-[#f8f6f1]/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#/" className="text-xl font-semibold tracking-tight">
-            denge.fit
-          </a>
-
-          <nav className="flex items-center gap-5 text-sm">
-            <NavLink to="/">anasayfa</NavLink>
-            <NavLink to="/rehberler">rehberler</NavLink>
-            <NavLink to="/araclar">araçlar</NavLink>
-            <NavLink to="/hakkinda">hakkında</NavLink>
-          </nav>
-        </div>
-      </header>
-
-      <main>{children}</main>
-
-      <footer className="border-t border-black/5 bg-white/60">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 text-sm text-gray-600 md:flex-row md:items-center md:justify-between">
-          <div>© 2026 denge.fit</div>
-
-          <div className="flex gap-4">
-            <a href="#/hakkinda" className="hover:text-black">
-              hakkında
-            </a>
-            <a href="#/rehberler" className="hover:text-black">
-              rehberler
-            </a>
-            <a href="#/araclar" className="hover:text-black">
-              araçlar
-            </a>
-          </div>
-
-          <div>iletişim: denge.fit@protonmail.com</div>
-        </div>
-      </footer>
-    </div>
+  const others = guideLibrary.filter(
+    (guide) =>
+      guide.slug !== currentSlug &&
+      guide.live &&
+      guide.tag !== currentGuide.tag
   );
+
+  return [...sameTag, ...others].slice(0, limit);
 }
 
-function HomePage() {
+function RelatedGuides({ currentSlug }) {
+  const related = getRelatedGuides(currentSlug);
+
   return (
-    <>
-      <section className="px-6 pb-20 pt-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
-          <div>
-            <span className="inline-block rounded-full border border-[#bdd6b2] bg-[#e7f0df] px-4 py-2 text-xs font-medium text-gray-700">
-              sade · uygulanabilir · sürdürülebilir
-            </span>
-
-            <h1 className="mt-6 text-4xl font-semibold leading-tight md:text-6xl">
-              sağlıklı yaşamı
-              <br />
-              karmaşık olmaktan çıkarıyoruz
-            </h1>
-
-            <p className="mt-6 max-w-xl text-base leading-7 text-gray-600 md:text-lg">
-              beslenme, hareket, günlük alışkanlıklar ve pratik araçlar tek
-              yerde. denge.fit; bilimsel temeli önemseyen, sade anlatımı
-              benimseyen ve uzun vadeli dengeyi hedefleyen modern bir wellness
-              platformudur.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="#/rehberler"
-                className="rounded-2xl bg-[#a8c69f] px-6 py-3 font-medium text-gray-900 transition hover:opacity-90"
-              >
-                rehberleri keşfet
-              </a>
-              <a
-                href="#/araclar"
-                className="rounded-2xl border border-black/10 bg-white px-6 py-3 font-medium transition hover:bg-black hover:text-white"
-              >
-                araçlara bak
-              </a>
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-sm">
-            <div className="grid gap-4">
-              <div className="rounded-2xl bg-[#eef5e8] p-5">
-                <p className="text-sm text-gray-500">odak</p>
-                <h3 className="mt-1 text-lg font-semibold">
-                  sürdürülebilir sağlık yaklaşımı
-                </h3>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-2xl border border-black/5 p-5">
-                  <p className="text-sm text-gray-500">içerik</p>
-                  <h3 className="mt-1 font-semibold">5 rehber içerik yayında</h3>
-                </div>
-                <div className="rounded-2xl border border-black/5 p-5">
-                  <p className="text-sm text-gray-500">araç</p>
-                  <h3 className="mt-1 font-semibold">bmi hesaplayıcı aktif</h3>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-black/5 p-5">
-                <p className="text-sm text-gray-500">yaklaşım</p>
-                <h3 className="mt-1 font-semibold">
-                  uç vaatler yerine uygulanabilir bilgi
-                </h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-16">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-2xl font-semibold md:text-3xl">
-            bu platformda ne var?
+    <section className="mt-10">
+      <div className="mb-6 flex items-end justify-between gap-4">
+        <div>
+          <span className="text-sm font-medium text-neutral-500">
+            ilgili rehberler
+          </span>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+            okumaya devam et
           </h2>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="rounded-[1.5rem] border border-black/5 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold">beslenme rehberleri</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                başlangıç, kilo yönetimi, gece acıkmaları ve daha fazlası.
-              </p>
-            </div>
-
-            <div className="rounded-[1.5rem] border border-black/5 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold">sağlıklı yaşam içerikleri</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                sade, okunabilir ve gündelik hayata uygulanabilir çerçeveler.
-              </p>
-            </div>
-
-            <div className="rounded-[1.5rem] border border-black/5 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold">pratik araçlar</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                ilk araç aktif: bmi hesaplayıcı. diğer araçlar yolda.
-              </p>
-            </div>
-          </div>
         </div>
-      </section>
 
-      <section className="bg-white/70 px-6 py-16">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-2xl font-semibold md:text-3xl">
-            kimler için?
-          </h2>
+        <Link
+          to="/rehberler"
+          className="text-sm font-medium underline underline-offset-4"
+        >
+          tüm rehberler
+        </Link>
+      </div>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {[
-              "kilo yönetimiyle ilgilenenler",
-              "daha iyi beslenmek isteyenler",
-              "günlük enerji ve rutinini toparlamak isteyenler",
-              "sağlıklı yaşamı sade şekilde öğrenmek isteyenler",
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-[1.25rem] border border-black/5 bg-[#f8f6f1] p-5 shadow-sm"
+      <div className="grid gap-5 md:grid-cols-3">
+        {related.map((guide) => (
+          <article
+            key={guide.title}
+            className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+          >
+            <div className={`h-28 bg-gradient-to-br ${guide.accent}`} />
+            <div className="p-5">
+              <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+                {guide.tag}
+              </span>
+              <h3 className="mt-4 text-lg font-medium leading-snug">
+                {guide.title}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                {guide.desc}
+              </p>
+              <Link
+                to={guide.slug}
+                className="mt-4 inline-block text-sm font-medium underline underline-offset-4"
               >
-                <p className="font-medium">{item}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-semibold md:text-3xl">
-                öne çıkan rehberler
-              </h2>
-              <p className="mt-2 text-sm text-gray-600">
-                bugünlük ilk içerik omurgası hazır
-              </p>
+                rehberi oku
+              </Link>
             </div>
-
-            <a
-              href="#/rehberler"
-              className="hidden text-sm font-medium text-gray-700 md:inline-block"
-            >
-              tüm rehberler →
-            </a>
-          </div>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <GuideCard
-              href="#/rehber/akdeniz-tipi-beslenme"
-              title="akdeniz tipi beslenme nedir?"
-              text="sürdürülebilir ve bilimsel temelli en popüler beslenme modellerinden biri."
-            />
-            <GuideCard
-              href="#/rehber/saglikli-beslenmeye-baslangic"
-              title="sağlıklı beslenmeye başlangıç"
-              text="mükemmel liste değil, sürdürülebilir temel alışkanlıklar önemlidir."
-            />
-            <GuideCard
-              href="#/rehber/surdurulebilir-kilo-yonetimi"
-              title="sürdürülebilir kilo yönetimi"
-              text="hızlı sonuç değil, korunabilir düzen kurmak asıl meseledir."
-            />
-            <GuideCard
-              href="#/rehber/gece-acikmalari"
-              title="gece acıkmaları neden olur?"
-              text="sadece irade değil; öğün düzeni, içerik ve metabolik etkenler de rol oynar."
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#eef5e8] px-6 py-16">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-2xl font-semibold md:text-3xl">
-            ilk araç aktif
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600">
-            bmi hesaplayıcı artık çalışıyor. diğer araçlar da aynı yapıya
-            eklenmeye hazır.
-          </p>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a
-              href="#/araclar"
-              className="rounded-2xl border border-black/10 bg-white px-4 py-2 text-sm"
-            >
-              bmi hesaplayıcı
-            </a>
-            <span className="rounded-2xl border border-black/10 bg-white px-4 py-2 text-sm opacity-70">
-              kalori ihtiyacı · yakında
-            </span>
-            <span className="rounded-2xl border border-black/10 bg-white px-4 py-2 text-sm opacity-70">
-              su ihtiyacı · yakında
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-semibold md:text-3xl">yaklaşımımız</h2>
-          <p className="mt-5 leading-7 text-gray-600">
-            denge.fit, bilimsel temeli önemseyen, uç vaatlerden kaçınan ve
-            sürdürülebilir sağlıklı yaşam yaklaşımını savunan bir platformdur.
-            hızlı çözümler yerine uzun vadeli dengeyi hedefler.
-          </p>
-        </div>
-      </section>
-    </>
-  );
-}
-
-function GuideCard({ href, title, text }) {
-  return (
-    <a
-      href={href}
-      className="rounded-[1.5rem] border border-black/5 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-    >
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="mt-3 text-sm leading-6 text-gray-600">{text}</p>
-      <span className="mt-4 inline-block text-sm font-medium text-gray-700">
-        içeriği oku →
-      </span>
-    </a>
-  );
-}
-
-function AboutPage() {
-  return (
-    <section className="px-6 py-20">
-      <div className="mx-auto max-w-4xl">
-        <span className="inline-block rounded-full border border-[#bdd6b2] bg-[#e7f0df] px-4 py-2 text-xs font-medium text-gray-700">
-          hakkında
-        </span>
-
-        <h1 className="mt-6 text-4xl font-semibold md:text-5xl">
-          denge.fit nedir?
-        </h1>
-
-        <p className="mt-6 max-w-3xl leading-7 text-gray-600">
-          denge.fit; beslenme, hareket, yaşam tarzı ve günlük alışkanlıklar
-          etrafında şekillenen modern bir sağlıklı yaşam platformudur. amacı,
-          internette dağınık halde bulunan bilgileri daha sade, daha güvenilir ve
-          daha uygulanabilir hale getirmektir.
-        </p>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          <InfoCard
-            title="amacı"
-            text="sağlıklı yaşamı sadece diyet listesi seviyesine indirmeden; daha geniş, daha sürdürülebilir ve daha gerçekçi bir çerçevede sunmak."
-          />
-          <InfoCard
-            title="yaklaşımı"
-            text="uç vaatler, hızlı çözümler ve temelsiz iddialar yerine; bilimsel zemini olan, sade anlatılmış ve günlük hayata uyarlanabilir bilgi."
-          />
-          <InfoCard
-            title="neleri kapsar?"
-            text="beslenme rehberleri, sağlıklı yaşam içerikleri, temel hesaplama araçları, günlük rutin önerileri ve zamanla büyüyecek dijital çözümler."
-          />
-          <InfoCard
-            title="ne değildir?"
-            text="mucize vaat eden, korku dili kullanan veya tek tip çözüm satan bir platform değildir."
-          />
-        </div>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
 
-function InfoCard({ title, text }) {
+function Home() {
+  const featured = guideLibrary.slice(0, 3);
+
   return (
-    <div className="rounded-[1.5rem] border border-black/5 bg-white p-6 shadow-sm">
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="mt-3 text-sm leading-6 text-gray-600">{text}</p>
+    <main>
+      <section className="mx-auto max-w-6xl px-6 pb-16 pt-14 md:pb-24 md:pt-20">
+        <div className="grid items-center gap-10 md:grid-cols-2">
+          <div>
+            <span className="inline-flex rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs font-medium backdrop-blur">
+              sağlıklı yaşamı sadeleştirir
+            </span>
+
+            <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+              dengeyi kur,
+              <br />
+              sürdürülebilir yaşa.
+            </h1>
+
+            <p className="mt-5 max-w-xl text-base leading-7 text-neutral-700 md:text-lg">
+              karmaşık diyetler, geçici çözümler ve bilgi kirliliği arasında
+              kaybolma. denge.fit; beslenme, günlük yaşam dengesi ve
+              uygulanabilir rehberlerle daha sade bir başlangıç sunar.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                to="/rehberler"
+                className="rounded-2xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                rehberlere göz at
+              </Link>
+              <Link
+                to="/araclar"
+                className="rounded-2xl border border-black/10 bg-white px-5 py-3 text-sm font-medium transition hover:bg-black/5"
+              >
+                hesaplayıcıları kullan
+              </Link>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-6 text-sm text-neutral-600">
+              <div>
+                <p className="font-semibold text-neutral-900">niş içerikler</p>
+                <p>yüksek niyetli konular</p>
+              </div>
+              <div>
+                <p className="font-semibold text-neutral-900">pratik araçlar</p>
+                <p>hızlı başlangıç noktası</p>
+              </div>
+              <div>
+                <p className="font-semibold text-neutral-900">sade yaklaşım</p>
+                <p>gerçek hayata uyumlu</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4">
+            <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+              <div className="bg-gradient-to-br from-[#dbe8d3] via-[#eef3e6] to-[#f6f1e8] p-6">
+                <p className="text-sm font-medium text-neutral-500">
+                  neden sürekli başa dönülüyor?
+                </p>
+                <div className="mt-4 grid gap-3">
+                  <div className="rounded-2xl bg-white/80 p-4 backdrop-blur">
+                    <h3 className="font-medium">bilgi çok, sistem yok</h3>
+                    <p className="mt-1 text-sm text-neutral-600">
+                      neyin doğru olduğunu bilsen bile günlük düzene dönüştürmek
+                      zor olabilir.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl bg-white/80 p-4 backdrop-blur">
+                    <h3 className="font-medium">sürdürülemeyen planlar</h3>
+                    <p className="mt-1 text-sm text-neutral-600">
+                      aşırı katı listeler kısa süreli motivasyon üretir ama uzun
+                      vadede dağılır.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl bg-white/80 p-4 backdrop-blur">
+                    <h3 className="font-medium">gerçek hayata uymayan öneriler</h3>
+                    <p className="mt-1 text-sm text-neutral-600">
+                      masa başı iş, yoğun tempo ve sosyal hayat çoğu zaman hesaba
+                      katılmaz.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-black/5 bg-white px-6 py-4">
+                <p className="text-sm text-neutral-600">
+                  amaç mükemmeliyet değil; sürdürülebilir düzen.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
+        <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-sm md:p-8">
+          <div className="max-w-2xl">
+            <span className="text-sm font-medium text-neutral-500">
+              denge yaklaşımı
+            </span>
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight">
+              sade. uygulanabilir. gerçek hayatla uyumlu.
+            </h2>
+            <p className="mt-4 text-neutral-700">
+              amaç mükemmel olmak değil; sürdürülebilir bir sistem kurmak.
+              denge.fit bu yüzden abartısız, anlaşılır ve uygulanabilir
+              içeriklere odaklanır.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            <div className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h3 className="text-lg font-medium">sade bilgiler</h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                karmaşık anlatımlar yerine anlaşılır ve günlük hayata uygun
+                içerikler.
+              </p>
+            </div>
+            <div className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h3 className="text-lg font-medium">uygulanabilir sistem</h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                teoride değil, işte, evde ve yoğun tempoda sürdürülebilecek
+                yaklaşım.
+              </p>
+            </div>
+            <div className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h3 className="text-lg font-medium">gerçekçi bakış</h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                hızlı mucizeler değil, küçük ama kalıcı değişimler.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
+        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <span className="text-sm font-medium text-neutral-500">
+              öne çıkan rehberler
+            </span>
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight">
+              ilk içerik kümeleri
+            </h2>
+          </div>
+
+          <Link
+            to="/rehberler"
+            className="text-sm font-medium underline underline-offset-4"
+          >
+            tüm rehberleri gör
+          </Link>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          {featured.map((item) => (
+            <article
+              key={item.title}
+              className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+            >
+              <div className={`h-32 bg-gradient-to-br ${item.accent}`} />
+              <div className="p-6">
+                <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+                  {item.tag}
+                </span>
+                <h3 className="mt-4 text-xl font-semibold leading-snug">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-neutral-600">
+                  {item.desc}
+                </p>
+                <Link
+                  to={item.slug}
+                  className="mt-5 inline-block text-sm font-medium underline underline-offset-4"
+                >
+                  rehberi aç
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
+        <div className="rounded-[2rem] bg-neutral-900 px-6 py-10 text-white md:px-10">
+          <div className="max-w-2xl">
+            <span className="text-sm font-medium text-white/60">
+              başlangıç noktası
+            </span>
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight">
+              araçlarla hızlıca başla
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-white/80 md:text-base">
+              teoride takılma. başlangıç için sade hesaplayıcıları kullan,
+              sonra rehberlerle düzenini güçlendir.
+            </p>
+
+            <div className="mt-6">
+              <Link
+                to="/araclar"
+                className="inline-flex rounded-2xl bg-white px-5 py-3 text-sm font-medium text-neutral-900 transition hover:opacity-90"
+              >
+                araçlara git
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function GuideCard({ guide }) {
+  return (
+    <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+      <div className={`h-28 bg-gradient-to-br ${guide.accent}`} />
+      <div className="p-5">
+        <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+          {guide.tag}
+        </span>
+
+        <h3 className="mt-4 text-lg font-medium leading-snug">{guide.title}</h3>
+        <p className="mt-2 text-sm leading-6 text-neutral-600">{guide.desc}</p>
+
+        {guide.live ? (
+          <Link
+            to={guide.slug}
+            className="mt-4 inline-block text-sm font-medium underline underline-offset-4"
+          >
+            rehberi oku
+          </Link>
+        ) : (
+          <p className="mt-4 text-sm text-neutral-400">yakında yayında</p>
+        )}
+      </div>
     </div>
   );
 }
 
-function GuidesPage() {
-  const guides = [
-    {
-      title: "akdeniz tipi beslenme nedir?",
-      text: "sürdürülebilir ve bilimsel temelli en popüler beslenme modellerinden biri.",
-      href: "#/rehber/akdeniz-tipi-beslenme",
-    },
-    {
-      title: "sağlıklı beslenmeye başlangıç",
-      text: "kafayı karıştırmadan, temel prensiplerle iyi bir başlangıç yapmanın çerçevesi.",
-      href: "#/rehber/saglikli-beslenmeye-baslangic",
-    },
-    {
-      title: "sürdürülebilir kilo yönetimi",
-      text: "geçici motivasyon yerine kalıcı alışkanlıklarla ilerlemenin mantığı.",
-      href: "#/rehber/surdurulebilir-kilo-yonetimi",
-    },
-    {
-      title: "gece acıkmaları neden olur?",
-      text: "yalnızca irade değil; düzen, içerik ve metabolik yapı da işin parçasıdır.",
-      href: "#/rehber/gece-acikmalari",
-    },
-    {
-      title: "bmi tek başına yeterli mi?",
-      text: "bmi yararlıdır ama vücudu tek başına eksiksiz anlatmaz.",
-      href: "#/rehber/bmi-tek-basina-yeterli-mi",
-    },
+function Guides() {
+  const [query, setQuery] = useState("");
+  const [selectedTag, setSelectedTag] = useState("tümü");
+
+  const tags = ["tümü", ...new Set(guideLibrary.map((guide) => guide.tag))];
+
+  const filteredGuides = useMemo(() => {
+    return guideLibrary.filter((guide) => {
+      const matchesTag =
+        selectedTag === "tümü" ? true : guide.tag === selectedTag;
+
+      const q = query.trim().toLowerCase();
+      const matchesQuery =
+        q === ""
+          ? true
+          : guide.title.toLowerCase().includes(q) ||
+            guide.desc.toLowerCase().includes(q) ||
+            guide.tag.toLowerCase().includes(q);
+
+      return matchesTag && matchesQuery;
+    });
+  }, [query, selectedTag]);
+
+  return (
+    <main className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+      <span className="text-sm font-medium text-neutral-500">rehberler</span>
+      <h1 className="mt-2 text-4xl font-semibold tracking-tight">
+        rehber içerikler
+      </h1>
+      <p className="mt-4 max-w-2xl text-neutral-700">
+        ilk aşamada niş ve yüksek niyetli içeriklere odaklanıyoruz.
+      </p>
+
+      <div className="mt-8 rounded-[2rem] border border-black/5 bg-white p-5 shadow-sm">
+        <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+          <div>
+            <label className="mb-2 block text-sm font-medium text-neutral-700">
+              rehber ara
+            </label>
+            <input
+              type="text"
+              placeholder="örnek: insülin, pcos, şişkinlik..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full rounded-2xl border border-neutral-200 px-4 py-3 outline-none focus:border-neutral-400"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-medium text-neutral-700">
+              kategori filtresi
+            </label>
+            <select
+              value={selectedTag}
+              onChange={(e) => setSelectedTag(e.target.value)}
+              className="w-full rounded-2xl border border-neutral-200 bg-white px-4 py-3 outline-none focus:border-neutral-400"
+            >
+              {tags.map((tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-neutral-600">
+          <span>
+            bulunan rehber:{" "}
+            <strong className="text-neutral-900">{filteredGuides.length}</strong>
+          </span>
+          <span className="hidden md:inline">•</span>
+          <span>
+            canlı içerik:{" "}
+            <strong className="text-neutral-900">
+              {filteredGuides.filter((guide) => guide.live).length}
+            </strong>
+          </span>
+        </div>
+      </div>
+
+      {filteredGuides.length > 0 ? (
+        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filteredGuides.map((guide) => (
+            <GuideCard key={guide.title} guide={guide} />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-10 rounded-[2rem] border border-dashed border-black/10 bg-white p-8 text-center shadow-sm">
+          <h2 className="text-xl font-semibold">eşleşen rehber bulunamadı</h2>
+          <p className="mt-3 text-neutral-600">
+            farklı bir kelime dene ya da kategori filtresini değiştir.
+          </p>
+        </div>
+      )}
+    </main>
+  );
+}
+
+function Tools() {
+  return (
+    <main className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+      <span className="text-sm font-medium text-neutral-500">araçlar</span>
+      <h1 className="mt-2 text-4xl font-semibold tracking-tight">
+        çalışan araçlar
+      </h1>
+      <p className="mt-4 max-w-2xl text-neutral-700">
+        başlangıç noktası olarak sade, hızlı ve gerçekten kullanılabilir
+        araçlar burada. gereksiz kalabalık yok.
+      </p>
+
+      <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <Calculator />
+        <WaterCalculator />
+      </div>
+    </main>
+  );
+}
+
+function About() {
+  return (
+    <main className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+      <span className="text-sm font-medium text-neutral-500">hakkımızda</span>
+      <h1 className="mt-2 text-4xl font-semibold tracking-tight">
+        gürültü değil, netlik
+      </h1>
+
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-sm md:p-8">
+          <p className="leading-7 text-neutral-700">
+            denge.fit; sağlıklı yaşamı daha ulaşılabilir, daha anlaşılır ve daha
+            sürdürülebilir hale getirmek için kuruldu. amaç, insanlara baskı
+            kuran bir dil değil; uygulanabilir bir düzen sunmak.
+          </p>
+        </div>
+
+        <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-sm md:p-8">
+          <ul className="space-y-4 text-neutral-700">
+            <li>• sade ve uygulanabilir içerikler</li>
+            <li>• niş, yüksek niyetli konu seçimi</li>
+            <li>• günlük hayata uyumlu yaklaşım</li>
+            <li>• araçlar + rehberler birlikte ilerleyen sistem</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function Contact() {
+  return (
+    <main className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+      <span className="text-sm font-medium text-neutral-500">iletişim</span>
+      <h1 className="mt-2 text-4xl font-semibold tracking-tight">
+        bize ulaşın
+      </h1>
+
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-sm md:p-8">
+          <h2 className="text-xl font-semibold">iletişim bilgileri</h2>
+          <div className="mt-5 space-y-3 text-neutral-700">
+            <p>denge.fit@protonmail.com</p>
+            <p>@denge.fit</p>
+          </div>
+        </div>
+
+        <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-sm md:p-8">
+          <h2 className="text-xl font-semibold">iş birliği</h2>
+          <p className="mt-4 leading-7 text-neutral-700">
+            içerik katkısı, marka iş birliği veya proje önerileri için mail
+            üzerinden ulaşabilirsiniz.
+          </p>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function GuideArticleInsulin() {
+  const currentSlug = "/rehberler/insulin-direnci-gunluk-beslenme";
+
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-14 md:py-20">
+      <Link
+        to="/rehberler"
+        className="text-sm text-neutral-500 underline underline-offset-4"
+      >
+        ← rehberlere dön
+      </Link>
+
+      <article className="mt-6 overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+        <div className="h-40 bg-gradient-to-br from-emerald-100 via-lime-50 to-[#f6f1e8]" />
+        <div className="p-6 md:p-10">
+          <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+            kan şekeri dengesi
+          </span>
+
+          <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
+            insülin direnci olanlar için günlük beslenme düzeni nasıl kurulmalı?
+          </h1>
+
+          <p className="mt-5 text-base leading-7 text-neutral-700">
+            insülin direnci olan birçok kişi ne yemesi gerektiğinden çok, bunu
+            günlük hayata nasıl uyarlayacağını bilemediği için zorlanır. sorun
+            çoğu zaman tek bir besin değildir; düzensiz öğünler, uzun açlıklar,
+            akşam kontrolsüz yeme ve gün içine yayılmış küçük kaçamaklardır.
+          </p>
+
+          <div className="mt-8 space-y-8">
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                insülin direncinde temel problem nedir?
+              </h2>
+              <p className="mt-3 leading-7 text-neutral-700">
+                vücut insülini üretir ama hücreler buna olması gerektiği kadar
+                iyi yanıt vermez. bunun sonucu olarak kan şekeri yönetimi
+                zorlaşabilir, açlık daha sık hissedilebilir ve özellikle tatlı
+                isteği artabilir.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                en sık yapılan hatalar
+              </h2>
+              <div className="mt-4 grid gap-4">
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">çok uzun süre aç kalmak</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    gün içinde öğün atlamak, akşam daha büyük porsiyonlara ve
+                    kontrol kaybına yol açabilir.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">öğünleri protein yönünden zayıf kurmak</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    sadece karbonhidrat ağırlıklı öğünler daha hızlı acıkmaya
+                    neden olabilir.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">akşam tatlı krizini gün boyu biriktirmek</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    gündüz yetersiz beslenme, akşam yüksek iştah olarak geri
+                    dönebilir.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                günlük düzen nasıl kurulabilir?
+              </h2>
+              <div className="mt-4 space-y-4 text-neutral-700">
+                <p>
+                  <strong>1.</strong> öğün aralarını aşırı uzatma. herkes için
+                  tek doğru saat yok ama uzun açlıklar seni kontrolden
+                  çıkarıyorsa bunu fark edip düzen kurmak gerekir.
+                </p>
+                <p>
+                  <strong>2.</strong> ana öğünlerde protein kaynağı bulundur.
+                  yumurta, yoğurt, peynir, et, tavuk, balık, bakliyat gibi
+                  seçenekler tokluğu destekler.
+                </p>
+                <p>
+                  <strong>3.</strong> lifli besinleri artır. sebzeler, kuru
+                  baklagiller, yulaf ve meyve gibi seçenekler günlük düzeni
+                  destekler.
+                </p>
+                <p>
+                  <strong>4.</strong> tatlı isteğini sadece iradeyle çözmeye
+                  çalışma. önce gün içi düzenin yeterli olup olmadığına bak.
+                </p>
+                <p>
+                  <strong>5.</strong> mükemmel liste yerine uygulanabilir sistem
+                  kur. iş hayatına, eve dönüş saatine ve gerçek tempona uyan plan
+                  daha değerlidir.
+                </p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h2 className="text-xl font-semibold tracking-tight">not</h2>
+              <p className="mt-3 text-sm leading-6 text-neutral-700">
+                bu içerik genel bilgilendirme amaçlıdır. tanı, tedavi veya
+                kişisel beslenme planı yerine geçmez. kişisel sağlık durumunuz
+                için uzman desteği alınmalıdır.
+              </p>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <RelatedGuides currentSlug={currentSlug} />
+    </main>
+  );
+}
+
+function GuideArticleSweet() {
+  const currentSlug = "/rehberler/tatli-istegi-nasil-azaltilir";
+
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-14 md:py-20">
+      <Link
+        to="/rehberler"
+        className="text-sm text-neutral-500 underline underline-offset-4"
+      >
+        ← rehberlere dön
+      </Link>
+
+      <article className="mt-6 overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+        <div className="h-40 bg-gradient-to-br from-amber-100 via-orange-50 to-[#f6f1e8]" />
+        <div className="p-6 md:p-10">
+          <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+            kan şekeri dengesi
+          </span>
+
+          <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
+            insülin direncinde tatlı isteği nasıl azaltılır?
+          </h1>
+
+          <p className="mt-5 text-base leading-7 text-neutral-700">
+            tatlı isteği çoğu zaman sadece irade eksikliği değildir. gün içinde
+            yetersiz beslenme, uzun açlık, düşük protein alımı ve düzensiz öğün
+            akşam saatlerinde daha güçlü istekler oluşturabilir. bu yüzden
+            çözüm yalnızca tatlıyı yasaklamak değildir.
+          </p>
+
+          <div className="mt-8 space-y-8">
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                tatlı krizleri neden artar?
+              </h2>
+              <p className="mt-3 leading-7 text-neutral-700">
+                gün boyu yeterli doygunluk sağlanmadığında vücut hızlı enerji
+                veren seçeneklere yönelmeye daha yatkın hale gelir. özellikle
+                akşam saatlerinde yorgunluk ve stres de bu isteği güçlendirebilir.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                en sık yapılan yanlışlar
+              </h2>
+              <div className="mt-4 grid gap-4">
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">tüm gün çok az yemek</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    akşam gelen kontrolsüz tatlı isteğinin en sık nedenlerinden
+                    biridir.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">yasak koyup sonra patlamak</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    aşırı katı kurallar kısa vadede işe yarıyor gibi görünse de
+                    çoğu zaman geri teper.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">stres ve uykuyu görmezden gelmek</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    sadece besine odaklanıp yaşam düzenini unutmak sorunu eksik
+                    çözmeye yol açar.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                ne yapmak daha mantıklı?
+              </h2>
+              <div className="mt-4 space-y-4 text-neutral-700">
+                <p>
+                  <strong>1.</strong> ana öğünleri daha dengeli kur. protein,
+                  lif ve yeterli hacim tatlı isteğinin şiddetini azaltabilir.
+                </p>
+                <p>
+                  <strong>2.</strong> öğün atlamayı alışkanlık haline getirme.
+                  özellikle seni akşam kontrolden çıkarıyorsa bu önemli.
+                </p>
+                <p>
+                  <strong>3.</strong> tatlıyı tamamen “yasaklı” kategoriye koyma.
+                  bu psikolojik baskıyı artırabilir.
+                </p>
+                <p>
+                  <strong>4.</strong> uykunu ve stres düzeyini ciddiye al.
+                  yorgunluk arttıkça hızlı ödül arayışı da artabilir.
+                </p>
+                <p>
+                  <strong>5.</strong> hedefini “hiç istememek” değil, “daha iyi
+                  yönetmek” olarak koy. bu daha gerçekçi ve sürdürülebilir olur.
+                </p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h2 className="text-xl font-semibold tracking-tight">not</h2>
+              <p className="mt-3 text-sm leading-6 text-neutral-700">
+                bu içerik genel bilgilendirme amaçlıdır. kişisel sağlık
+                durumunuz ve özel ihtiyaçlarınız için uzman desteği alınmalıdır.
+              </p>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <RelatedGuides currentSlug={currentSlug} />
+    </main>
+  );
+}
+
+function GuideArticleDesk() {
+  const currentSlug = "/rehberler/masa-basi-beslenme-hatalari";
+
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-14 md:py-20">
+      <Link
+        to="/rehberler"
+        className="text-sm text-neutral-500 underline underline-offset-4"
+      >
+        ← rehberlere dön
+      </Link>
+
+      <article className="mt-6 overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+        <div className="h-40 bg-gradient-to-br from-sky-100 via-cyan-50 to-[#f6f1e8]" />
+        <div className="p-6 md:p-10">
+          <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+            günlük yaşam
+          </span>
+
+          <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
+            masa başı çalışanlarda en sık yapılan beslenme hataları
+          </h1>
+
+          <p className="mt-5 text-base leading-7 text-neutral-700">
+            masa başı çalışma düzeni sadece hareketi azaltmaz; öğün saatlerini,
+            susama farkındalığını ve atıştırma davranışını da etkiler. bu yüzden
+            problem çoğu zaman “ne yediğinden” çok, “gün içinde nasıl bir düzen
+            kurduğundan” kaynaklanır.
+          </p>
+
+          <div className="mt-8 space-y-8">
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                neden masa başı düzende işler zorlaşıyor?
+              </h2>
+              <p className="mt-3 leading-7 text-neutral-700">
+                uzun süre oturmak, ekran karşısında çalışmak ve yoğun odak
+                gerektiren işler; hem açlık sinyallerini karıştırabilir hem de
+                fark etmeden sık atıştırmaya yol açabilir. ayrıca çoğu kişi su
+                tüketimini ve hareket molalarını ihmal eder.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                en sık görülen hatalar
+              </h2>
+              <div className="mt-4 grid gap-4">
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">öğün atlayıp akşam yüklenmek</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    gün içindeki düzensizlik akşam daha yüksek porsiyonlara
+                    neden olabilir.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">susamayı açlık sanmak</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    gün boyu az su içen kişiler gereksiz atıştırmaya daha açık
+                    olabilir.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-[#f7f4ee] p-4">
+                  <h3 className="font-medium">ekran başında otomatik yemek</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    farkındalık azaldığında tüketilen miktar kolayca artabilir.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                daha iyi bir düzen nasıl kurulur?
+              </h2>
+              <div className="mt-4 space-y-4 text-neutral-700">
+                <p>
+                  <strong>1.</strong> iş temposuna uygun sabit bir öğün akışı
+                  belirle. mükemmel saat değil, sürdürülebilir düzen önemli.
+                </p>
+                <p>
+                  <strong>2.</strong> masanda “göz önünde” sürekli atıştırmalık
+                  tutma. çevre düzeni davranışı çok etkiler.
+                </p>
+                <p>
+                  <strong>3.</strong> su içmeyi hatırlatacak küçük bir sistem
+                  kur. şişe bulundurmak bile fark yaratabilir.
+                </p>
+                <p>
+                  <strong>4.</strong> ana öğünde protein ve sebze/lif dengesini
+                  ihmal etme. bu, daha uzun tokluk sağlar.
+                </p>
+                <p>
+                  <strong>5.</strong> kısa hareket molaları ekle. sadece kalori
+                  değil, zihinsel yorgunluk açısından da işe yarar.
+                </p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h2 className="text-xl font-semibold tracking-tight">not</h2>
+              <p className="mt-3 text-sm leading-6 text-neutral-700">
+                bu içerik genel bilgilendirme amaçlıdır. kişisel sağlık
+                durumunuz, iş rutininiz ve özel ihtiyaçlarınız için uzman
+                desteği daha doğru sonuç verir.
+              </p>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <RelatedGuides currentSlug={currentSlug} />
+    </main>
+  );
+}
+
+function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navItems = [
+    { to: "/", label: "ana sayfa" },
+    { to: "/rehberler", label: "rehberler" },
+    { to: "/araclar", label: "araçlar" },
+    { to: "/hakkimizda", label: "hakkımızda" },
+    { to: "/iletisim", label: "iletişim" },
   ];
 
   return (
-    <section className="px-6 py-20">
-      <div className="mx-auto max-w-5xl">
-        <span className="inline-block rounded-full border border-[#bdd6b2] bg-[#e7f0df] px-4 py-2 text-xs font-medium text-gray-700">
-          rehberler
-        </span>
+    <header className="sticky top-0 z-50 border-b border-black/5 bg-[#f6f1e8]/90 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Link to="/" className="text-xl font-semibold tracking-tight">
+          denge.fit
+        </Link>
 
-        <h1 className="mt-6 text-4xl font-semibold md:text-5xl">
-          sade anlatılmış rehberler
-        </h1>
-
-        <p className="mt-5 max-w-3xl leading-7 text-gray-600">
-          burada amaç bilgi yığını sunmak değil. gerçekten işine yarayacak temel
-          çerçeveyi, sade ve okunabilir biçimde vermek.
-        </p>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {guides.map((guide) => (
-            <GuideCard
-              key={guide.title}
-              href={guide.href}
-              title={guide.title}
-              text={guide.text}
-            />
+        <nav className="hidden gap-6 text-sm md:flex">
+          {navItems.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="transition hover:opacity-70"
+            >
+              {item.label}
+            </Link>
           ))}
-        </div>
+        </nav>
+
+        <button
+          type="button"
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="inline-flex rounded-xl border border-black/10 bg-white px-3 py-2 text-sm md:hidden"
+        >
+          menü
+        </button>
       </div>
-    </section>
-  );
-}
 
-function BMIResultBox({ bmi }) {
-  const category = useMemo(() => {
-    if (bmi < 18.5) {
-      return {
-        title: "zayıf",
-        text: "bu değer düşük aralıkta. tek başına yorumlamak doğru olmaz; genel vücut yapısı ve sağlık durumu da önemlidir.",
-      };
-    }
-    if (bmi < 25) {
-      return {
-        title: "normal aralık",
-        text: "bu değer genel bmi sınıflamasında normal aralıkta görünüyor. yine de tek başına yeterli değildir.",
-      };
-    }
-    if (bmi < 30) {
-      return {
-        title: "fazla kilolu aralık",
-        text: "bu değer bmi sınıflamasında yüksek görünüyor. ancak kas kütlesi ve bel çevresi gibi diğer veriler de önemlidir.",
-      };
-    }
-    return {
-      title: "obezite aralığı",
-      text: "bu değer bmi sınıflamasında belirgin yüksek aralıkta. daha kapsamlı değerlendirme yapmak daha doğru olur.",
-    };
-  }, [bmi]);
-
-  return (
-    <div className="mt-6 rounded-[1.5rem] border border-black/5 bg-[#eef5e8] p-5">
-      <p className="text-sm text-gray-500">sonuç</p>
-      <h3 className="mt-1 text-2xl font-semibold">{bmi.toFixed(1)}</h3>
-      <p className="mt-3 font-medium">{category.title}</p>
-      <p className="mt-2 text-sm leading-6 text-gray-700">{category.text}</p>
-    </div>
-  );
-}
-
-function ToolsPage() {
-  const [kg, setKg] = useState("");
-  const [cm, setCm] = useState("");
-  const [bmi, setBmi] = useState(null);
-
-  function calculateBMI() {
-    const weight = Number(kg);
-    const height = Number(cm) / 100;
-
-    if (!weight || !height) {
-      setBmi(null);
-      return;
-    }
-
-    const result = weight / (height * height);
-    setBmi(result);
-  }
-
-  return (
-    <section className="px-6 py-20">
-      <div className="mx-auto max-w-5xl">
-        <span className="inline-block rounded-full border border-[#bdd6b2] bg-[#e7f0df] px-4 py-2 text-xs font-medium text-gray-700">
-          araçlar
-        </span>
-
-        <h1 className="mt-6 text-4xl font-semibold md:text-5xl">
-          pratik araçlar
-        </h1>
-
-        <p className="mt-5 max-w-3xl leading-7 text-gray-600">
-          ilk aktif araç bmi hesaplayıcı. diğer araçlar aynı yapıyla buraya
-          eklenecek.
-        </p>
-
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          <div className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-sm">
-            <h2 className="text-2xl font-semibold">bmi hesaplayıcı</h2>
-            <p className="mt-3 text-sm leading-6 text-gray-600">
-              boy ve kilo verilerine göre temel bir başlangıç göstergesi sunar.
-            </p>
-
-            <div className="mt-6 space-y-4">
-              <div>
-                <label className="mb-2 block text-sm font-medium">kilo (kg)</label>
-                <input
-                  type="number"
-                  value={kg}
-                  onChange={(e) => setKg(e.target.value)}
-                  placeholder="örnek: 85"
-                  className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-black"
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium">boy (cm)</label>
-                <input
-                  type="number"
-                  value={cm}
-                  onChange={(e) => setCm(e.target.value)}
-                  placeholder="örnek: 183"
-                  className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-black"
-                />
-              </div>
-
-              <button
-                onClick={calculateBMI}
-                className="w-full rounded-xl bg-black px-4 py-3 font-medium text-white transition hover:opacity-90"
+      {menuOpen && (
+        <div className="border-t border-black/5 bg-white md:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col px-6 py-4 text-sm">
+            {navItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setMenuOpen(false)}
+                className="rounded-xl px-3 py-3 transition hover:bg-black/5"
               >
-                hesapla
-              </button>
-            </div>
-
-            {bmi !== null && <BMIResultBox bmi={bmi} />}
+                {item.label}
+              </Link>
+            ))}
           </div>
+        </div>
+      )}
+    </header>
+  );
+}
 
-          <div className="space-y-6">
-            <ComingSoonCard
-              title="kalori ihtiyacı"
-              text="günlük enerji ihtiyacını daha anlaşılır hale getiren araç."
-            />
-            <ComingSoonCard
-              title="su ihtiyacı"
-              text="günlük tüketim hedefini daha pratik hale getiren araç."
-            />
-            <ComingSoonCard
-              title="makro dağılım rehberi"
-              text="temel makro dengesini hızlıca yorumlamaya yardımcı olur."
-            />
+function Footer() {
+  return (
+    <footer className="border-t border-black/5 bg-white/60">
+      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-4">
+        <div className="md:col-span-2">
+          <h3 className="text-lg font-semibold">denge.fit</h3>
+          <p className="mt-3 max-w-md text-sm leading-6 text-neutral-600">
+            sağlıklı yaşamı sadeleştiren rehberler ve pratik araçlar. amaç,
+            insanları bilgiye boğmak değil; uygulanabilir bir başlangıç sunmak.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
+            menü
+          </h4>
+          <div className="mt-3 flex flex-col gap-2 text-sm">
+            <Link to="/" className="hover:opacity-70">
+              ana sayfa
+            </Link>
+            <Link to="/rehberler" className="hover:opacity-70">
+              rehberler
+            </Link>
+            <Link to="/araclar" className="hover:opacity-70">
+              araçlar
+            </Link>
+            <Link to="/hakkimizda" className="hover:opacity-70">
+              hakkımızda
+            </Link>
+            <Link to="/iletisim" className="hover:opacity-70">
+              iletişim
+            </Link>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
+            iletişim
+          </h4>
+          <div className="mt-3 space-y-2 text-sm text-neutral-700">
+            <p>denge.fit@protonmail.com</p>
+            <p>@denge.fit</p>
           </div>
         </div>
       </div>
-    </section>
+
+      <div className="border-t border-black/5 px-6 py-4 text-center text-xs text-neutral-500">
+        © 2026 denge.fit — sade, uygulanabilir, sürdürülebilir.
+      </div>
+    </footer>
   );
 }
 
-function ComingSoonCard({ title, text }) {
+export default function App() {
   return (
-    <div className="rounded-[1.5rem] border border-black/5 bg-white p-6 shadow-sm">
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="mt-3 text-sm leading-6 text-gray-600">{text}</p>
-      <span className="mt-5 inline-block rounded-full bg-[#eef5e8] px-3 py-1 text-xs font-medium text-gray-700">
-        yakında
-      </span>
+    <div className="min-h-screen bg-[#f6f1e8] text-neutral-900">
+      <Header />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/rehberler" element={<Guides />} />
+        <Route path="/araclar" element={<Tools />} />
+        <Route path="/hakkimizda" element={<About />} />
+        <Route path="/iletisim" element={<Contact />} />
+        <Route
+          path="/rehberler/insulin-direnci-gunluk-beslenme"
+          element={<GuideArticleInsulin />}
+        />
+        <Route
+          path="/rehberler/tatli-istegi-nasil-azaltilir"
+          element={<GuideArticleSweet />}
+        />
+        <Route
+          path="/rehberler/masa-basi-beslenme-hatalari"
+          element={<GuideArticleDesk />}
+        />
+      </Routes>
+
+      <Footer />
     </div>
   );
 }
-
-function ArticleLayout({ title, intro, children }) {
-  return (
-    <section className="px-6 py-20">
-      <article className="mx-auto max-w-3xl">
-        <a
-          href="#/rehberler"
-          className="text-sm font-medium text-gray-600 hover:text-black"
-        >
-          ← rehberlere dön
-        </a>
-
-        <span className="mt-6 inline-block rounded-full border border-[#bdd6b2] bg-[#e7f0df] px-4 py-2 text-xs font-medium text-gray-700">
-          rehber
-        </span>
-
-        <h1 className="mt-6 text-4xl font-semibold leading-tight md:text-5xl">
-          {title}
-        </h1>
-
-        <p className="mt-6 text-lg leading-8 text-gray-600">{intro}</p>
-
-        <div className="mt-12 space-y-12">{children}</div>
-      </article>
-    </section>
-  );
-}
-
-function Section({ title, children }) {
-  return (
-    <section>
-      <h2 className="text-2xl font-semibold">{title}</h2>
-      <div className="mt-4 space-y-4 leading-7 text-gray-700">{children}</div>
-    </section>
-  );
-}
-
-function MediterraneanGuidePage() {
-  return (
-    <ArticleLayout
-      title="akdeniz tipi beslenme nedir?"
-      intro="akdeniz tipi beslenme, tek tek yasak listeleriyle değil; genel beslenme düzeniyle öne çıkan, sürdürülebilirliği yüksek bir yaklaşımdır. mesele sadece zeytinyağı değil; daha fazla gerçek gıda, daha az aşırı işlenmiş ürün ve daha dengeli bir günlük yapı kurmaktır."
-    >
-      <Section title="kısa özet">
-        <p>
-          akdeniz tipi beslenme; sebze, meyve, baklagil, tam tahıl, zeytinyağı,
-          yoğurt ve dengeli protein kaynaklarını merkeze alan, uzun vadede
-          uygulanabilirliği yüksek bir beslenme modelidir.
-        </p>
-      </Section>
-
-      <Section title="temel mantığı nedir?">
-        <p>
-          bu modelin gücü, mükemmel beslenme iddiasında olmamasıdır. günlük
-          hayatla kavga etmez. dışarıda yemek yiyen, yoğun çalışan, sosyal hayatı
-          olan insanlar için daha uygulanabilir bir çerçeve sunar.
-        </p>
-      </Section>
-
-      <Section title="neler daha çok yer alır?">
-        <ul className="space-y-2">
-          <li>• sebzeler ve meyveler</li>
-          <li>• baklagiller</li>
-          <li>• zeytinyağı</li>
-          <li>• yoğurt ve fermente ürünler</li>
-          <li>• tam tahıllar</li>
-          <li>• dengeli protein kaynakları</li>
-          <li>• kontrollü miktarda kuruyemiş</li>
-        </ul>
-      </Section>
-
-      <Section title="neden bu kadar popüler?">
-        <p>
-          çünkü kural sayısı az, uygulanabilirliği yüksek ve sert yasaklara
-          dayanmıyor. bir beslenme düzeni ne kadar ideal görünürse görünsün, uzun
-          süre uygulanamıyorsa pratik değeri düşer.
-        </p>
-      </Section>
-
-      <Section title="son söz">
-        <p>
-          akdeniz tipi beslenme sihirli çözüm değildir. ama günlük hayatla uyumlu,
-          dengeli ve uzun vadeli uygulanabilir bir yapı sunar. bu yüzden birçok
-          kişi için güçlü bir başlangıç noktasıdır.
-        </p>
-      </Section>
-    </ArticleLayout>
-  );
-}
-
-function HealthyStartGuidePage() {
-  return (
-    <ArticleLayout
-      title="sağlıklı beslenmeye başlangıç"
-      intro="sağlıklı beslenmeye başlamak isteyen çoğu kişi ilk hatayı çok büyük kararlarla yapar. bir gecede her şeyi değiştirmeye çalışmak kısa süreli motivasyon üretir ama sürdürülebilir olmaz. doğru başlangıç daha sade olur."
-    >
-      <Section title="ilk gün mükemmel olmak zorunda değil">
-        <p>
-          sağlıklı beslenmenin başlangıcı kusursuz liste değildir. en önemli şey
-          birkaç temel davranışı oturtmaktır: öğün düzeni, daha az paketli ürün,
-          daha dengeli tabaklar ve gereksiz sıvı kalori tüketimini azaltmak.
-        </p>
-      </Section>
-
-      <Section title="nereden başlanmalı?">
-        <p>
-          önce her şeyi değil, en çok sorun çıkaran noktayı düzelt. örneğin:
-          düzensiz öğün, sürekli atıştırma, akşam kontrolsüz yeme veya yetersiz
-          protein alımı. tek bir problemi çözmek, her şeyi aynı anda çözmeye
-          çalışmaktan daha etkilidir.
-        </p>
-      </Section>
-
-      <Section title="tabak mantığı iş görür">
-        <p>
-          çoğu insan için en pratik çerçeve şudur: tabağın yarısına sebze, bir
-          bölümüne protein, bir bölümüne kontrollü karbonhidrat koymak. bu kadar
-          basit bir sistem bile karar yorgunluğunu azaltır.
-        </p>
-      </Section>
-
-      <Section title="en büyük hata ne?">
-        <p>
-          aç kalmayı plan sanmak. çok sert başlangıçlar birkaç gün disiplinli
-          hissettirse de sonrasında daha büyük yeme ataklarına dönebilir.
-        </p>
-      </Section>
-
-      <Section title="sonuç">
-        <p>
-          sağlıklı beslenmeye başlangıç, radikal yasaklar değil; sürdürülebilir
-          düzeltmelerle olur. küçük ama kalıcı adımlar, büyük ama geçici
-          motivasyondan daha değerlidir.
-        </p>
-      </Section>
-    </ArticleLayout>
-  );
-}
-
-function WeightManagementGuidePage() {
-  return (
-    <ArticleLayout
-      title="sürdürülebilir kilo yönetimi"
-      intro="kilo yönetiminde asıl mesele kilo vermek değil, verilen kiloyu koruyabilecek düzeni kurmaktır. hızlı sonuçlar etkileyici görünür ama çoğu zaman aynı hızla geri döner."
-    >
-      <Section title="neden sürdürülebilirlik önemli?">
-        <p>
-          çünkü vücut birkaç haftalık motivasyona değil, tekrar eden günlük
-          davranışlara yanıt verir. kilo yönetimi uzun vadeli oyundur.
-        </p>
-      </Section>
-
-      <Section title="en yaygın yanlış">
-        <p>
-          çok düşük kalorili, sosyal hayata uymayan ve kişiyi sürekli aç bırakan
-          planları çözüm sanmak. bunlar genelde kısa sürede bırakılır.
-        </p>
-      </Section>
-
-      <Section title="doğru çerçeve nedir?">
-        <p>
-          korunabilir öğün düzeni, yeterli protein, makul porsiyon, hareketin
-          artırılması ve akşam kontrolünün güçlendirilmesi. çoğu kişi için asıl
-          oyun burada kazanılır.
-        </p>
-      </Section>
-
-      <Section title="tartı tek kriter değildir">
-        <p>
-          bel çevresi, enerji seviyesi, açlık kontrolü ve genel iştah düzeni de
-          önemlidir. bazen iyi giden süreç tartıda hemen görünmeyebilir.
-        </p>
-      </Section>
-
-      <Section title="sonuç">
-        <p>
-          sürdürülebilir kilo yönetimi, kendini zorlayarak değil; kendine uygun
-          çalışan bir düzen kurarak olur. korunamayan sonuç, gerçek sonuç değildir.
-        </p>
-      </Section>
-    </ArticleLayout>
-  );
-}
-
-function NightHungerGuidePage() {
-  return (
-    <ArticleLayout
-      title="gece acıkmaları neden olur?"
-      intro="gece acıkmaları çoğu zaman sadece irade meselesi değildir. gün içinde yetersiz beslenme, dengesiz öğün yapısı, aşırı kısıtlama, stres ve alışkanlıklar bu tabloyu büyütebilir."
-    >
-      <Section title="gün içinde az yemek akşam patlayabilir">
-        <p>
-          sabah ve öğlen çok yetersiz beslenen birçok kişi akşam saatlerinde daha
-          kontrolsüz hale gelir. vücut gün boyu biriken açlığı akşam telafi etmeye
-          çalışır.
-        </p>
-      </Section>
-
-      <Section title="protein ve lif eksikliği önemli">
-        <p>
-          gün içindeki öğünler yeterince tok tutmuyorsa, akşam zihinsel ve fiziksel
-          açlık daha sert hissedilir. özellikle protein ve lif yetersizliği burada
-          belirleyici olabilir.
-        </p>
-      </Section>
-
-      <Section title="alışkanlık etkisi">
-        <p>
-          bazı insanlar için gece yemek yalnızca açlık değil; ekran karşısı,
-          ödül hissi veya rahatlama rutini haline gelmiştir. bu durumda problem
-          sadece mideyle ilgili değildir.
-        </p>
-      </Section>
-
-      <Section title="ne yapılabilir?">
-        <p>
-          gün içi öğünleri toparlamak, akşam yemeğini daha dengeli kurmak, protein
-          ve lif alımını artırmak ve gece atıştırmasını otomatik rutinden çıkarmak
-          iyi başlangıçtır.
-        </p>
-      </Section>
-
-      <Section title="sonuç">
-        <p>
-          gece acıkmaları zayıf karakter göstergesi değildir. çoğu zaman gün içi
-          yapı bozukluğunun akşamdaki sonucudur. doğru yerden bakarsan çözüm
-          kolaylaşır.
-        </p>
-      </Section>
-    </ArticleLayout>
-  );
-}
-
-function BMIGuidePage() {
-  return (
-    <ArticleLayout
-      title="bmi tek başına yeterli mi?"
-      intro="bmi yani vücut kitle indeksi, boy ve kilo üzerinden hızlı bir çerçeve sunar. bu yüzden faydalıdır. ama vücudu tek başına tam anlatmaz."
-    >
-      <Section title="neden kullanılıyor?">
-        <p>
-          çünkü çok hızlı hesaplanır ve kabaca bir sınıflama sağlar. büyük
-          popülasyonları değerlendirmede pratik araçtır.
-        </p>
-      </Section>
-
-      <Section title="neden tek başına yetmez?">
-        <p>
-          çünkü kas kütlesi, yağ dağılımı, bel çevresi, cinsiyet, yaş ve genel
-          vücut kompozisyonu bmi içine girmez. iki kişinin bmi değeri aynı olabilir
-          ama sağlık profili çok farklı olabilir.
-        </p>
-      </Section>
-
-      <Section title="yine de tamamen işe yaramaz mı?">
-        <p>
-          hayır. bmi başlangıç için yararlıdır. sorun, onu nihai karar aracı gibi
-          görmekte başlar.
-        </p>
-      </Section>
-
-      <Section title="daha doğru bakış nasıl olur?">
-        <p>
-          bmi’yi bel çevresi, fiziksel görünüm, açlık durumu, enerji düzeyi,
-          hareket kapasitesi ve gerekiyorsa profesyonel değerlendirmeyle birlikte
-          düşünmek daha doğrudur.
-        </p>
-      </Section>
-
-      <Section title="sonuç">
-        <p>
-          bmi iyi bir giriş verisidir ama son söz değildir. sana yön gösterebilir;
-          seni bütünüyle tanımlayamaz.
-        </p>
-      </Section>
-    </ArticleLayout>
-  );
-}
-
-function NotFoundPage() {
-  return (
-    <section className="px-6 py-24">
-      <div className="mx-auto max-w-3xl text-center">
-        <h1 className="text-4xl font-semibold">sayfa bulunamadı</h1>
-        <p className="mt-4 text-gray-600">
-          yanlış bir bağlantıya gelmiş olabilirsin.
-        </p>
-        <a
-          href="#/"
-          className="mt-8 inline-block rounded-2xl bg-[#a8c69f] px-6 py-3 font-medium text-gray-900"
-        >
-          anasayfaya dön
-        </a>
-      </div>
-    </section>
-  );
-}
-
-function RouterView() {
-  const [route, setRoute] = useState(getCurrentRoute());
-
-  useEffect(() => {
-    const onHashChange = () => {
-      setRoute(getCurrentRoute());
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    window.addEventListener("hashchange", onHashChange);
-
-    if (!window.location.hash) {
-      window.location.hash = "#/";
-    }
-
-    return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
-
-  if (route === "/") return <HomePage />;
-  if (route === "/hakkinda") return <AboutPage />;
-  if (route === "/rehberler") return <GuidesPage />;
-  if (route === "/araclar") return <ToolsPage />;
-  if (route === "/rehber/akdeniz-tipi-beslenme") return <MediterraneanGuidePage />;
-  if (route === "/rehber/saglikli-beslenmeye-baslangic") return <HealthyStartGuidePage />;
-  if (route === "/rehber/surdurulebilir-kilo-yonetimi") return <WeightManagementGuidePage />;
-  if (route === "/rehber/gece-acikmalari") return <NightHungerGuidePage />;
-  if (route === "/rehber/bmi-tek-basina-yeterli-mi") return <BMIGuidePage />;
-
-  return <NotFoundPage />;
-}
-
-function App() {
-  return (
-    <Layout>
-      <RouterView />
-    </Layout>
-  );
-}
-
-export default App;
