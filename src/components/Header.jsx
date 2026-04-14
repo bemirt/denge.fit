@@ -1,12 +1,52 @@
-function Footer() {
+function Header() {
   return (
-    <footer id="iletisim" className="border-t border-[var(--color-border)] px-6 py-8">
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <p className="text-sm text-[var(--color-text-soft)]">© 2026 denge.fit — daha dengeli bir başlangıç</p>
-        <p className="text-sm text-[var(--color-text-soft)]">landing v1</p>
+    <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[rgba(248,246,241,0.92)] backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-6">
+        <a href="#" className="flex min-w-0 items-center gap-3">
+          <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[rgba(47,58,50,0.08)] bg-[var(--color-primary)]">
+            <div className="h-5 w-5 rounded-full border-2 border-[var(--color-text)] opacity-80"></div>
+          </div>
+
+          <div className="min-w-0">
+            <p className="truncate text-lg font-semibold leading-none tracking-[-0.02em]">
+              denge.fit
+            </p>
+            <p className="truncate pt-1 text-xs text-[var(--color-text-soft)]">
+              sağlıklı yaşam için daha sade bir başlangıç
+            </p>
+          </div>
+        </a>
+
+        <nav className="hidden items-center gap-8 md:flex">
+          <a
+            href="#neden"
+            className="text-sm text-[var(--color-text-soft)] transition hover:text-[var(--color-text)]"
+          >
+            neden denge
+          </a>
+          <a
+            href="#nasil"
+            className="text-sm text-[var(--color-text-soft)] transition hover:text-[var(--color-text)]"
+          >
+            nasıl çalışır
+          </a>
+          <a
+            href="#iletisim"
+            className="text-sm text-[var(--color-text-soft)] transition hover:text-[var(--color-text)]"
+          >
+            iletişim
+          </a>
+        </nav>
+
+        <a
+          href="#iletisim"
+          className="inline-flex shrink-0 items-center justify-center rounded-full bg-[var(--color-text)] px-5 py-3 text-sm font-semibold !text-white whitespace-nowrap transition hover:opacity-90"
+        >
+          whatsapp'tan yaz
+        </a>
       </div>
-    </footer>
-  )
+    </header>
+  );
 }
 
-export default Footer
+export default Header;

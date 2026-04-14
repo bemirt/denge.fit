@@ -28,8 +28,22 @@ export default function Calculator() {
     setResult({ bmi, status, daily });
   };
 
+  const whatsappUrl = result
+    ? `https://wa.me/905050727306?text=${encodeURIComponent(
+        `merhaba, vücut değerlerimi hesapladım.
+kilo: ${weight} kg
+boy: ${height} cm
+yaş: ${age}
+bkİ: ${result.bmi}
+durum: ${result.status}
+günlük kalori ihtiyacı: ${result.daily} kcal
+
+buna göre bana özel doğru yönü netleştirebilir miyiz?`
+      )}`
+    : "https://wa.me/905050727306?text=";
+
   return (
-    <section className="w-full max-w-2xl mx-auto rounded-3xl border border-black/5 bg-white p-6 shadow-sm">
+    <section className="w-full rounded-3xl border border-black/5 bg-white p-6 shadow-sm">
       <div className="mb-6">
         <h2 className="text-2xl font-semibold tracking-tight">
           vücut hesaplayıcı
@@ -63,18 +77,20 @@ export default function Calculator() {
         />
       </div>
 
-      <button
-        onClick={calculate}
-        className="mt-4 rounded-2xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
-      >
-        hesapla
-      </button>
+      <div className="mt-4">
+        <button
+          onClick={calculate}
+          className="rounded-2xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+        >
+          hesapla
+        </button>
+      </div>
 
       {result && (
         <div className="mt-6 rounded-2xl bg-[#f5f5ef] p-5">
           <div className="space-y-2 text-sm text-neutral-800">
             <p>
-              <span className="font-semibold">bkİ:</span> {result.bmi}
+              <span className="font-semibold">BKİ:</span> {result.bmi}
             </p>
             <p>
               <span className="font-semibold">durum:</span> {result.status}
@@ -89,6 +105,27 @@ export default function Calculator() {
             bu hesaplama genel bilgilendirme amaçlıdır. kişisel sağlık
             durumunuz için uzman desteği alınmalıdır.
           </p>
+
+          <div className="mt-5 rounded-2xl border border-black/5 bg-white p-4">
+            <p className="text-sm font-medium text-neutral-900">
+              bu sadece başlangıç
+            </p>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">
+              değerlerini gördün, şimdi sana özel doğru yönü netleştirebiliriz.
+            </p>
+            <div className="mt-3 text-xs leading-5 text-neutral-500">
+              <p>kısa bir mesaj yeterli</p>
+              <p>ücretsiz ilk yönlendirme</p>
+            </div>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto"
+            >
+              whatsapp'tan yaz, birlikte netleştirelim
+            </a>
+          </div>
         </div>
       )}
     </section>
