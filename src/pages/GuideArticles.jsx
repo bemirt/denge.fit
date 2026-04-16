@@ -219,7 +219,7 @@ export function GuideArticleSweet() {
                   özellikle seni akşam kontrolden çıkarıyorsa bu önemli.
                 </p>
                 <p>
-                  <strong>3.</strong> tatlıyı tamamen “yasaklı” kategoriye koyma.
+                  <strong>3.</strong> tatlıyı tamamen "yasaklı" kategoriye koyma.
                   bu psikolojik baskıyı artırabilir.
                 </p>
                 <p>
@@ -227,8 +227,8 @@ export function GuideArticleSweet() {
                   yorgunluk arttıkça hızlı ödül arayışı da artabilir.
                 </p>
                 <p>
-                  <strong>5.</strong> hedefini “hiç istememek” değil, “daha iyi
-                  yönetmek” olarak koy. bu daha gerçekçi ve sürdürülebilir olur.
+                  <strong>5.</strong> hedefini "hiç istememek" değil, "daha iyi
+                  yönetmek" olarak koy. bu daha gerçekçi ve sürdürülebilir olur.
                 </p>
               </div>
             </section>
@@ -277,8 +277,8 @@ export function GuideArticleDesk() {
           <p className="mt-5 text-base leading-7 text-neutral-700">
             masa başı çalışma düzeni sadece hareketi azaltmaz; öğün saatlerini,
             susama farkındalığını ve atıştırma davranışını da etkiler. bu yüzden
-            problem çoğu zaman “ne yediğinden” çok, “gün içinde nasıl bir düzen
-            kurduğundan” kaynaklanır.
+            problem çoğu zaman "ne yediğinden" çok, "gün içinde nasıl bir düzen
+            kurduğundan" kaynaklanır.
           </p>
 
           <div className="mt-8 space-y-8">
@@ -334,7 +334,7 @@ export function GuideArticleDesk() {
                   belirle. mükemmel saat değil, sürdürülebilir düzen önemli.
                 </p>
                 <p>
-                  <strong>2.</strong> masanda “göz önünde” sürekli atıştırmalık
+                  <strong>2.</strong> masanda "göz önünde" sürekli atıştırmalık
                   tutma. çevre düzeni davranışı çok etkiler.
                 </p>
                 <p>
@@ -358,6 +358,278 @@ export function GuideArticleDesk() {
                 bu içerik genel bilgilendirme amaçlıdır. kişisel sağlık
                 durumunuz, iş rutininiz ve özel ihtiyaçlarınız için uzman
                 desteği daha doğru sonuç verir.
+              </p>
+            </section>
+
+            <BottomCTA />
+          </div>
+        </div>
+      </article>
+
+      <RelatedGuides currentSlug={currentSlug} />
+    </main>
+  );
+}
+
+export function GuideArticlePregnancy() {
+  const currentSlug = "/rehberler/gebelik-planlayan-kadinlar-icin-beslenme";
+
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-14 md:py-20">
+      <Link
+        to="/rehberler"
+        className="text-sm text-neutral-500 underline underline-offset-4"
+      >
+        ← rehberlere dön
+      </Link>
+
+      <article className="mt-6 overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+        <div className="h-40 bg-gradient-to-br from-rose-100 via-pink-50 to-[#f6f1e8]" />
+        <div className="p-6 md:p-10">
+          <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+            kadın sağlığı
+          </span>
+
+          <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
+            gebelik planlayan kadınlar için beslenme
+          </h1>
+
+          <p className="mt-5 text-base leading-7 text-neutral-700">
+            gebelik planı yapılan dönem, sadece kilo odaklı değil; enerji
+            dengesi, vitamin-mineral yeterliliği ve sürdürülebilir alışkanlıklar
+            açısından da önemlidir. bu süreçte amaç kusursuz beslenmek değil,
+            vücudu gebeliğe destek olacak kadar düzenli ve yeterli beslemektir.
+          </p>
+
+          <div className="mt-8 space-y-8">
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                neden önceden düzen kurmak faydalı?
+              </h2>
+              <p className="mt-3 leading-7 text-neutral-700">
+                gebelik oluşmadan önce kurulan beslenme düzeni; enerji alımı,
+                demir, folat ve protein gibi temel başlıklarda eksik kalma
+                riskini azaltmaya yardımcı olabilir. ayrıca ani ve sert
+                değişiklikler yerine yavaş oturan alışkanlıklar daha kalıcı olur.
+              </p>
+            </section>
+
+            <MidCTA />
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                öncelik verilmesi gereken noktalar
+              </h2>
+              <div className="mt-4 space-y-4 text-neutral-700">
+                <p>
+                  <strong>1.</strong> ana öğünleri düzenli kur. uzun açlıklar ve
+                  bir öğüne yığılan beslenme, günlük yeterliliği zorlaştırabilir.
+                </p>
+                <p>
+                  <strong>2.</strong> protein kaynaklarına her gün yer ver.
+                  yumurta, yoğurt, peynir, balık, et veya bakliyatlar temel
+                  yapı taşlarıdır.
+                </p>
+                <p>
+                  <strong>3.</strong> sebze, meyve ve tam tahıl çeşitliliğini
+                  artır. bu grup hem lif hem de farklı mikro besin ögeleri
+                  açısından destek sağlar.
+                </p>
+                <p>
+                  <strong>4.</strong> takviyeleri kendi kendine başlama mantığıyla
+                  değil, doktor önerisiyle düşün. özellikle folik asit ve demir
+                  gibi başlıklarda kişisel plan gerekebilir.
+                </p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h2 className="text-xl font-semibold tracking-tight">kısa sonuç</h2>
+              <p className="mt-3 text-sm leading-6 text-neutral-700">
+                gebelik öncesi beslenmede en güçlü adım, geçici liste aramak
+                yerine düzenli ve yeterli bir temel oluşturmaktır. özel bir
+                sağlık durumun varsa bireysel takip daha doğru olur.
+              </p>
+            </section>
+
+            <BottomCTA />
+          </div>
+        </div>
+      </article>
+
+      <RelatedGuides currentSlug={currentSlug} />
+    </main>
+  );
+}
+
+export function GuideArticlePcos() {
+  const currentSlug = "/rehberler/pcos-beslenme-yaklasimi";
+
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-14 md:py-20">
+      <Link
+        to="/rehberler"
+        className="text-sm text-neutral-500 underline underline-offset-4"
+      >
+        ← rehberlere dön
+      </Link>
+
+      <article className="mt-6 overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+        <div className="h-40 bg-gradient-to-br from-violet-100 via-fuchsia-50 to-[#f6f1e8]" />
+        <div className="p-6 md:p-10">
+          <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+            kadın sağlığı
+          </span>
+
+          <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
+            pcos'ta beslenme yaklaşımı
+          </h1>
+
+          <p className="mt-5 text-base leading-7 text-neutral-700">
+            pcos tek bir besinle ortaya çıkmaz ve tek bir besinle düzelmez.
+            bu nedenle en faydalı yaklaşım, kan şekeri dengesini destekleyen,
+            aşırı kısıtlama yaratmayan ve günlük hayata uyabilen bir düzen
+            kurmaktır.
+          </p>
+
+          <div className="mt-8 space-y-8">
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                pcos'ta beslenme neden önemli?
+              </h2>
+              <p className="mt-3 leading-7 text-neutral-700">
+                pcos bazı kişilerde insülin direnci, açlık dengesizliği ve kilo
+                yönetiminde zorlanma ile birlikte görülebilir. düzenli öğün,
+                yeterli protein ve lif alımı bu dalgalanmaları yumuşatmaya
+                yardımcı olabilir.
+              </p>
+            </section>
+
+            <MidCTA />
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                temel prensipler
+              </h2>
+              <div className="mt-4 space-y-4 text-neutral-700">
+                <p>
+                  <strong>1.</strong> uzun süre aç kalıp sonra fazla yemek yerine
+                  daha dengeli bir öğün akışı kur. bu, gün sonu kontrol kaybını
+                  azaltabilir.
+                </p>
+                <p>
+                  <strong>2.</strong> sadece karbonhidrat ağırlıklı tabaklar
+                  yerine protein ve lif ekle. yoğurt, yumurta, peynir,
+                  bakliyat ve sebze iyi bir temel oluşturur.
+                </p>
+                <p>
+                  <strong>3.</strong> aşırı yasaklar koyma. çok katı listeler
+                  kısa sürede bıkkınlık yaratıp sürdürülebilirliği bozabilir.
+                </p>
+                <p>
+                  <strong>4.</strong> uyku, stres ve hareketi beslenmeden ayrı
+                  düşünme. pcos yönetiminde tablo genellikle birden fazla
+                  başlığın birlikte ele alınmasıyla iyileşir.
+                </p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h2 className="text-xl font-semibold tracking-tight">kısa sonuç</h2>
+              <p className="mt-3 text-sm leading-6 text-neutral-700">
+                pcos'ta en iyi beslenme planı, moda diyetlerden çok sana uyum
+                sağlayan düzendir. belirtiler yoğunsa veya laboratuvar takibi
+                gerekiyorsa hekim ve diyetisyen desteği birlikte daha faydalıdır.
+              </p>
+            </section>
+
+            <BottomCTA />
+          </div>
+        </div>
+      </article>
+
+      <RelatedGuides currentSlug={currentSlug} />
+    </main>
+  );
+}
+
+export function GuideArticleBloating() {
+  const currentSlug = "/rehberler/siskinlik-icin-gunluk-beslenme-onerileri";
+
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-14 md:py-20">
+      <Link
+        to="/rehberler"
+        className="text-sm text-neutral-500 underline underline-offset-4"
+      >
+        ← rehberlere dön
+      </Link>
+
+      <article className="mt-6 overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+        <div className="h-40 bg-gradient-to-br from-teal-100 via-emerald-50 to-[#f6f1e8]" />
+        <div className="p-6 md:p-10">
+          <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
+            bağırsak sağlığı
+          </span>
+
+          <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
+            şişkinlik yaşayanlar için günlük beslenme önerileri
+          </h1>
+
+          <p className="mt-5 text-base leading-7 text-neutral-700">
+            şişkinlik tek başına bir hastalık değildir; yemek hızı, öğün
+            düzeni, porsiyon büyüklüğü ve bazı besinlere kişisel hassasiyet gibi
+            farklı nedenlerle artabilir. bu yüzden amaç her şeyi kesmek değil,
+            hangi düzenin seni rahatlattığını anlamaktır.
+          </p>
+
+          <div className="mt-8 space-y-8">
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                şişkinlik neden günlük hayatta artar?
+              </h2>
+              <p className="mt-3 leading-7 text-neutral-700">
+                çok hızlı yemek, uzun açlıktan sonra büyük porsiyonlar tüketmek,
+                yetersiz su içmek veya gün boyu sürekli atıştırmak sindirim
+                konforunu bozabilir. bazı kişilerde stres de belirtileri
+                belirginleştirir.
+              </p>
+            </section>
+
+            <MidCTA />
+
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                daha rahat bir düzen için neler denenebilir?
+              </h2>
+              <div className="mt-4 space-y-4 text-neutral-700">
+                <p>
+                  <strong>1.</strong> yemekleri daha yavaş ye ve lokmaları iyi
+                  çiğne. hava yutma ve aşırı hızlı yeme bazı kişilerde önemli
+                  bir etkendir.
+                </p>
+                <p>
+                  <strong>2.</strong> öğün aralarını düzenle. çok uzun aç kalıp
+                  bir anda fazla yemek sindirim şikâyetini artırabilir.
+                </p>
+                <p>
+                  <strong>3.</strong> sebze, baklagil, süt ürünü veya gazlı
+                  içecekler gibi seni rahatsız eden grupları not al. herkeste
+                  aynı besin sorun yaratmaz.
+                </p>
+                <p>
+                  <strong>4.</strong> su tüketimini ve günlük hafif hareketi ihmal
+                  etme. yürüyüş gibi basit adımlar bile rahatlama sağlayabilir.
+                </p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl bg-[#f6f1e8] p-5">
+              <h2 className="text-xl font-semibold tracking-tight">kısa sonuç</h2>
+              <p className="mt-3 text-sm leading-6 text-neutral-700">
+                şişkinlik sık tekrarlıyorsa önce günlük düzen ve tetikleyiciler
+                gözden geçirilmelidir. şikâyetler uzun sürüyor, ağrı veya başka
+                belirtiler ekleniyorsa tıbbi değerlendirme geciktirilmemelidir.
               </p>
             </section>
 

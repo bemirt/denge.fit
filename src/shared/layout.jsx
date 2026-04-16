@@ -101,15 +101,15 @@ export function Footer() {
             iletişim
           </h4>
           <div className="mt-3 space-y-2 text-sm text-neutral-700">
-            <p>📧 denge.fit@protonmail.com</p>
-            <p>📷 @denge.fit</p>
+            <p>e-posta: denge.fit@protonmail.com</p>
+            <p>instagram: @denge.fit</p>
             <a
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noreferrer"
               className="inline-block pt-1 underline underline-offset-4"
             >
-              💬 whatsapp
+              whatsapp
             </a>
           </div>
         </div>

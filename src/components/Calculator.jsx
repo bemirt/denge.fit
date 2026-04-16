@@ -49,7 +49,8 @@ buna göre bana özel doğru yönü netleştirebilir miyiz?`
           vücut hesaplayıcı
         </h2>
         <p className="mt-2 text-sm text-neutral-600">
-          başlangıç noktanı görmek için temel değerlerini gir.
+          temel vücut değerlerini görmek, hangi noktada olduğunu anlamanı
+          sağlar. bu da hedefini daha gerçekçi kurmanı kolaylaştırır.
         </p>
       </div>
 

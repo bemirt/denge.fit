@@ -2,8 +2,11 @@ import { Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import {
+  GuideArticleBloating,
   GuideArticleDesk,
   GuideArticleInsulin,
+  GuideArticlePregnancy,
+  GuideArticlePcos,
   GuideArticleSweet,
 } from "./pages/GuideArticles";
 import Guides from "./pages/Guides";
@@ -33,6 +36,18 @@ export default function App() {
         <Route
           path="/rehberler/masa-basi-beslenme-hatalari"
           element={<GuideArticleDesk />}
+        />
+        <Route
+          path="/rehberler/gebelik-planlayan-kadinlar-icin-beslenme"
+          element={<GuideArticlePregnancy />}
+        />
+        <Route
+          path="/rehberler/pcos-beslenme-yaklasimi"
+          element={<GuideArticlePcos />}
+        />
+        <Route
+          path="/rehberler/siskinlik-icin-gunluk-beslenme-onerileri"
+          element={<GuideArticleBloating />}
         />
       </Routes>
 

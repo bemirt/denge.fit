@@ -9,8 +9,9 @@ export default function Tools() {
         çalışan hesaplayıcılar
       </h1>
       <p className="mt-4 max-w-2xl text-neutral-700">
-        başlangıç noktası olarak sade, hızlı ve gerçekten kullanılabilir
-        hesaplayıcılar burada. gereksiz kalabalık yok.
+        nereden başlayacağını görmek bazen karar vermeyi kolaylaştırır. bu
+        hesaplayıcılar, temel ihtiyaçlarını kısa sürede görerek daha bilinçli
+        adım atmana yardımcı olur.
       </p>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">

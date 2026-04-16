@@ -244,7 +244,7 @@ export default function Home() {
               rel="noreferrer"
               className="mt-6 inline-block rounded-xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
             >
-              direkt whatsapp’tan yaz
+              direkt whatsapp'tan yaz
             </a>
           </div>
 

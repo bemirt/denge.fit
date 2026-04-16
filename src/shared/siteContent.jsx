@@ -130,7 +130,7 @@ Detaylı destek almak istiyorum.`;
         type="submit"
         className="w-full rounded-xl bg-neutral-900 py-3 text-sm font-medium text-white transition hover:opacity-90"
       >
-        whatsapp’a gönder
+        whatsapp'a gönder
       </button>
 
       <p className="text-xs leading-6 text-neutral-500">
@@ -275,16 +275,12 @@ export function GuideCard({ guide }) {
         <h3 className="mt-4 text-lg font-medium leading-snug">{guide.title}</h3>
         <p className="mt-2 text-sm leading-6 text-neutral-600">{guide.desc}</p>
 
-        {guide.live ? (
-          <Link
-            to={guide.slug}
-            className="mt-4 inline-block text-sm font-medium underline underline-offset-4"
-          >
-            rehberi oku
-          </Link>
-        ) : (
-          <p className="mt-4 text-sm text-neutral-400">yakında yayında</p>
-        )}
+        <Link
+          to={guide.slug}
+          className="mt-4 inline-block text-sm font-medium underline underline-offset-4"
+        >
+          rehberi oku
+        </Link>
       </div>
     </div>
   );

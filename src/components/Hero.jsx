@@ -98,6 +98,27 @@ function Hero() {
           </div>
         </div>
       </div>
+
+      <div className="mx-auto mt-8 max-w-6xl">
+        <div className="rounded-[32px] border border-[var(--color-border)] bg-white/90 p-4 shadow-[0_12px_40px_rgba(0,0,0,0.04)] md:p-5">
+          <div className="grid gap-3 md:grid-cols-3">
+            <div className="rounded-[24px] border border-[rgba(47,58,50,0.06)] bg-[var(--color-surface)] px-4 py-4">
+              <p className="text-sm text-[var(--color-text-soft)]">güven veren içerik</p>
+              <p className="mt-1 font-semibold text-[var(--color-text)]">uzman içerikleri</p>
+            </div>
+
+            <div className="rounded-[24px] border border-[rgba(47,58,50,0.06)] bg-[var(--color-surface)] px-4 py-4">
+              <p className="text-sm text-[var(--color-text-soft)]">kolay başlangıç</p>
+              <p className="mt-1 font-semibold text-[var(--color-text)]">sade ve uygulanabilir yaklaşım</p>
+            </div>
+
+            <div className="rounded-[24px] border border-[rgba(47,58,50,0.06)] bg-[var(--color-surface)] px-4 py-4">
+              <p className="text-sm text-[var(--color-text-soft)]">sana göre yön</p>
+              <p className="mt-1 font-semibold text-[var(--color-text)]">kişiye özel yönlendirme</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

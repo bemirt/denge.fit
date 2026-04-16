@@ -18,7 +18,7 @@ export default function Contact() {
             en hızlı başlangıç
           </span>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-            önce WhatsApp’tan yaz
+            önce WhatsApp'tan yaz
           </h2>
           <p className="mt-4 leading-7 text-neutral-700">
             kısa bir mesaj yeterli. hedefini, zorlandığın noktayı veya ne aradığını
@@ -43,7 +43,7 @@ export default function Contact() {
               rel="noreferrer"
               className="inline-flex items-center justify-center rounded-2xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
             >
-              WhatsApp’tan iletişime geç
+              WhatsApp'tan iletişime geç
             </a>
             <a
               href="mailto:denge.fit@protonmail.com"

@@ -34,7 +34,8 @@ buna göre bana özel doğru yönü netleştirebilir miyiz?`
           günlük su ihtiyacı hesaplayıcı
         </h2>
         <p className="mt-2 text-sm text-neutral-600">
-          kilona göre yaklaşık günlük su ihtiyacını öğren.
+          yeterli su içmek enerji, odak ve günlük denge için önemlidir. bu
+          hesaplayıcı sana kabaca ne kadar suya ihtiyacın olabileceğini gösterir.
         </p>
       </div>
 
