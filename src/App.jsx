@@ -12,12 +12,14 @@ import {
 import Guides from "./pages/Guides";
 import Home from "./pages/Home";
 import Tools from "./pages/Tools";
+import ScrollToTop from "./components/ScrollToTop";
 import { Footer, Header } from "./shared/layout";
 
 export default function App() {
   return (
     <div className="min-h-screen bg-[#f6f1e8] text-neutral-900">
       <Header />
+      <ScrollToTop />
 
       <Routes>
         <Route path="/" element={<Home />} />
