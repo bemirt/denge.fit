@@ -32,7 +32,8 @@ export default function Guides() {
         rehber içerikler
       </h1>
       <p className="mt-4 max-w-2xl text-neutral-700">
-        ilk aşamada niş ve yüksek niyetli içeriklere odaklanıyoruz.
+        içerik grupları arasından ilgini çekebilecek rehberleri daha kolay
+        filtreleyebilirsin.
       </p>
 
       <div className="mt-8 rounded-[2rem] border border-black/5 bg-white p-5 shadow-sm">
@@ -68,19 +69,9 @@ export default function Guides() {
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-neutral-600">
-          <span>
-            bulunan rehber:{" "}
-            <strong className="text-neutral-900">{filteredGuides.length}</strong>
-          </span>
-          <span className="hidden md:inline">•</span>
-          <span>
-            canlı içerik:{" "}
-            <strong className="text-neutral-900">
-              {filteredGuides.filter((guide) => guide.live).length}
-            </strong>
-          </span>
-        </div>
+        <p className="mt-4 text-sm text-neutral-600">
+          toplam {filteredGuides.length} rehber listeleniyor.
+        </p>
       </div>
 
       {filteredGuides.length > 0 ? (

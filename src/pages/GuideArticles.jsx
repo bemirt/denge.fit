@@ -444,7 +444,9 @@ export function GuideArticlePregnancy() {
             </section>
 
             <section className="rounded-3xl bg-[#f6f1e8] p-5">
-              <h2 className="text-xl font-semibold tracking-tight">kısa sonuç</h2>
+              <h2 className="text-xl font-semibold tracking-tight">
+                kısa sonuç
+              </h2>
               <p className="mt-3 text-sm leading-6 text-neutral-700">
                 gebelik öncesi beslenmede en güçlü adım, geçici liste aramak
                 yerine düzenli ve yeterli bir temel oluşturmaktır. özel bir
@@ -486,8 +488,8 @@ export function GuideArticlePcos() {
           </h1>
 
           <p className="mt-5 text-base leading-7 text-neutral-700">
-            pcos tek bir besinle ortaya çıkmaz ve tek bir besinle düzelmez.
-            bu nedenle en faydalı yaklaşım, kan şekeri dengesini destekleyen,
+            pcos tek bir besinle ortaya çıkmaz ve tek bir besinle düzelmez. bu
+            nedenle en faydalı yaklaşım, kan şekeri dengesini destekleyen,
             aşırı kısıtlama yaratmayan ve günlük hayata uyabilen bir düzen
             kurmaktır.
           </p>
@@ -535,7 +537,9 @@ export function GuideArticlePcos() {
             </section>
 
             <section className="rounded-3xl bg-[#f6f1e8] p-5">
-              <h2 className="text-xl font-semibold tracking-tight">kısa sonuç</h2>
+              <h2 className="text-xl font-semibold tracking-tight">
+                kısa sonuç
+              </h2>
               <p className="mt-3 text-sm leading-6 text-neutral-700">
                 pcos'ta en iyi beslenme planı, moda diyetlerden çok sana uyum
                 sağlayan düzendir. belirtiler yoğunsa veya laboratuvar takibi
@@ -625,7 +629,9 @@ export function GuideArticleBloating() {
             </section>
 
             <section className="rounded-3xl bg-[#f6f1e8] p-5">
-              <h2 className="text-xl font-semibold tracking-tight">kısa sonuç</h2>
+              <h2 className="text-xl font-semibold tracking-tight">
+                kısa sonuç
+              </h2>
               <p className="mt-3 text-sm leading-6 text-neutral-700">
                 şişkinlik sık tekrarlıyorsa önce günlük düzen ve tetikleyiciler
                 gözden geçirilmelidir. şikâyetler uzun sürüyor, ağrı veya başka

@@ -1,52 +1,21 @@
-function WhySection() {
+function HowItWorks() {
   return (
-    <section id="neden" className="px-5 py-16 md:px-6 md:py-20">
-      <div className="mx-auto max-w-6xl">
-        <div className="max-w-3xl">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-[var(--color-text-soft)]">
-            neden denge.fit
-          </p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-            çünkü insanlar çoğu zaman bilgiye değil,
-            <span className="block">güvenilir bir sadeleştirmeye ihtiyaç duyuyor</span>
-          </h2>
-          <p className="mt-6 text-lg leading-8 text-[var(--color-text-soft)]">
-            sosyal medyada ve internette içerik çok fazla. ama çok içerik olması, doğru karar vermeyi kolaylaştırmıyor.
-            tam tersine kullanıcıyı yoruyor, kararsız bırakıyor ve güven sorununu büyütüyor.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          <div className="rounded-[30px] border border-[var(--color-border)] bg-white p-7">
-            <p className="text-sm uppercase tracking-[0.18em] text-[var(--color-text-soft)]">01</p>
-            <p className="mt-4 text-2xl font-semibold tracking-[-0.03em]">bilgi kalabalığı</p>
-            <p className="mt-4 leading-7 text-[var(--color-text-soft)]">
-              tekrar eden, çelişen ve bağlamdan kopuk içerikler kullanıcıyı daha bilinçli değil, daha yorgun hale
-              getiriyor.
-            </p>
-          </div>
-
-          <div className="rounded-[30px] border border-[var(--color-border)] bg-white p-7">
-            <p className="text-sm uppercase tracking-[0.18em] text-[var(--color-text-soft)]">02</p>
-            <p className="mt-4 text-2xl font-semibold tracking-[-0.03em]">uzman seçimi zor</p>
-            <p className="mt-4 leading-7 text-[var(--color-text-soft)]">
-              doğru uzmana ulaşmak her zaman kolay değil. kullanıcı çoğu zaman kimin kendisine gerçekten uygun olduğunu
-              baştan anlayamıyor.
-            </p>
-          </div>
-
-          <div className="rounded-[30px] border border-[var(--color-border)] bg-white p-7">
-            <p className="text-sm uppercase tracking-[0.18em] text-[var(--color-text-soft)]">03</p>
-            <p className="mt-4 text-2xl font-semibold tracking-[-0.03em]">net yönlendirme eksik</p>
-            <p className="mt-4 leading-7 text-[var(--color-text-soft)]">
-              insanlar çoğu zaman ne aradığını kabaca biliyor ama nasıl ilerlemesi gerektiğini bilmiyor. denge.fit tam
-              burada devreye giriyor.
-            </p>
-          </div>
-        </div>
+    <section id="nasil" className="px-5 py-16 md:px-6 md:py-20">
+      <div className="mx-auto max-w-6xl rounded-[34px] border border-[var(--color-border)] bg-white p-8 md:p-10">
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-[var(--color-text-soft)]">
+          neden <em className="italic">denge</em>
+        </p>
+        <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
+          kısa, net ve uygulanabilir bir akış
+        </h2>
+        <p className="mt-4 max-w-3xl leading-8 text-[var(--color-text-soft)]">
+          insanlar çoğu zaman ne aradığını kabaca biliyor ama nasıl ilerlemesi
+          gerektiğini bilmiyor. <em className="italic">denge</em> tam bu ilk
+          adımı kolaylaştırmak için var.
+        </p>
       </div>
     </section>
-  )
+  );
 }
 
-export default WhySection
+export default HowItWorks;

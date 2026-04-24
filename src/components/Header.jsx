@@ -9,7 +9,7 @@ function Header() {
 
           <div className="min-w-0">
             <p className="truncate text-lg font-semibold leading-none tracking-[-0.02em]">
-              denge.fit
+              <em className="italic">denge</em>
             </p>
             <p className="truncate pt-1 text-xs text-[var(--color-text-soft)]">
               sağlıklı yaşam için daha sade bir başlangıç
@@ -40,9 +40,9 @@ function Header() {
 
         <a
           href="#iletisim"
-          className="inline-flex shrink-0 items-center justify-center rounded-full bg-[var(--color-text)] px-5 py-3 text-sm font-semibold !text-white whitespace-nowrap transition hover:opacity-90"
+          className="inline-flex shrink-0 items-center justify-center rounded-full bg-green-800 px-5 py-3 text-sm font-semibold !text-white whitespace-nowrap transition hover:bg-green-900"
         >
-          whatsapp'tan yaz
+          whatsapp üzerinden iletişime geç
         </a>
       </div>
     </header>

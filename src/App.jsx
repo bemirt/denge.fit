@@ -11,6 +11,7 @@ import {
 } from "./pages/GuideArticles";
 import Guides from "./pages/Guides";
 import Home from "./pages/Home";
+import Tests from "./pages/Tests";
 import Tools from "./pages/Tools";
 import ScrollToTop from "./components/ScrollToTop";
 import { Footer, Header } from "./shared/layout";
@@ -24,6 +25,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/rehberler" element={<Guides />} />
+        <Route path="/testler" element={<Tests />} />
         <Route path="/araclar" element={<Tools />} />
         <Route path="/hakkimizda" element={<About />} />
         <Route path="/iletisim" element={<Contact />} />

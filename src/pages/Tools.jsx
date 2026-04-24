@@ -1,18 +1,24 @@
 import Calculator from "../components/Calculator";
 import WaterCalculator from "../components/WaterCalculator";
+import { MiniCTA } from "../shared/siteContent";
 
 export default function Tools() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-14 md:py-20">
-      <span className="text-sm font-medium text-neutral-500">hesaplayıcılar</span>
-      <h1 className="mt-2 text-4xl font-semibold tracking-tight">
-        çalışan hesaplayıcılar
-      </h1>
-      <p className="mt-4 max-w-2xl text-neutral-700">
-        nereden başlayacağını görmek bazen karar vermeyi kolaylaştırır. bu
-        hesaplayıcılar, temel ihtiyaçlarını kısa sürede görerek daha bilinçli
-        adım atmana yardımcı olur.
+      <div className="mb-8">
+        <p className="text-sm font-medium text-neutral-500">araçlar</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900">
+          hesaplayıcılar
+        </h1>
+      </div>
+
+      <p className="max-w-2xl text-neutral-700">
+        mevcut durumu görmek bazen karar vermeyi kolaylaştırır. bu araçlar,
+        temel ihtiyaçlarını kısa sürede görerek daha bilinçli bir başlangıç
+        yapmana yardımcı olur.
       </p>
+
+      <MiniCTA className="mt-8 max-w-md" />
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         <Calculator />

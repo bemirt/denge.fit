@@ -7,11 +7,11 @@ function ApproachSection() {
             yaklaşımımız
           </p>
           <h3 className="mt-4 text-3xl font-semibold tracking-[-0.03em]">
-            boş vaat yok. bilim dışı dil yok. gereksiz gürültü yok.
+            sade, uygulanabilir, sürdürülebilir.
           </h3>
           <p className="mt-4 max-w-xl leading-8 text-[var(--color-text)]">
-            denge.fit tarafında amaç, kullanıcıyı kısa vadede etkileyen büyük sloganlar değil; uzun vadede güven
-            oluşturan netlik ve sadelik.
+            <em className="italic">denge</em> tarafında amaç, büyük sloganlar
+            değil; uzun vadede güven oluşturan netlik ve sadelik.
           </p>
         </div>
 
@@ -20,16 +20,17 @@ function ApproachSection() {
             uzun vade
           </p>
           <h3 className="mt-4 text-3xl font-semibold tracking-[-0.03em]">
-            landing ile başlıyor, zamanla gerçek bir platforma dönüşüyor
+            rehberler, araçlar ve yönlendirme aynı yapıda buluşur
           </h3>
           <p className="mt-4 max-w-xl leading-8 text-[var(--color-text-soft)]">
-            hedef sadece estetik bir açılış sayfası değil. bu yapı ileride içerik, araçlar, uzman yönlendirmesi ve
-            mobil uygulama tarafına evrilecek temel bir sistem.
+            hedef sadece bir açılış sayfası değil. bu yapı zamanla içerik,
+            araçlar ve doğru ilk yönlendirme tarafında büyüyen bir sisteme
+            dönüşür.
           </p>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default ApproachSection
+export default ApproachSection;

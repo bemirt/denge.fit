@@ -58,7 +58,7 @@ buna göre bana özel doğru yönü netleştirebilir miyiz?`
       <div className="mt-4">
         <button
           onClick={calculateWater}
-          className="rounded-2xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+          className="rounded-2xl bg-green-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-green-900"
         >
           hesapla
         </button>
@@ -79,9 +79,8 @@ buna göre bana özel doğru yönü netleştirebilir miyiz?`
 
           <p className="mt-4 text-sm leading-6 text-neutral-700">
             bu sonuç genel bir tahmindir; günlük rutine, hava sıcaklığına ve
-            aktivite düzeyine göre sana özel ihtiyaç daha farklı olabilir.
-            yani bu miktar tek başına yeterli olmayabilir, birlikte
-            netleştirebiliriz.
+            aktivite düzeyine göre sana özel ihtiyaç daha farklı olabilir. yani
+            bu miktar tek başına yeterli olmayabilir, birlikte netleştirebiliriz.
           </p>
 
           <p className="mt-4 text-xs leading-5 text-neutral-500">
@@ -104,9 +103,9 @@ buna göre bana özel doğru yönü netleştirebilir miyiz?`
               href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto"
+              className="mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-green-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-green-900 sm:w-auto"
             >
-              whatsapp'tan yaz, birlikte netleştirelim
+              whatsapp üzerinden iletişime geç
             </a>
           </div>
         </div>

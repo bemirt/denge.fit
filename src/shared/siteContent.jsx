@@ -2,6 +2,31 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { WHATSAPP_LINK, guideLibrary } from "./siteData";
 
+export function MiniCTA({ className = "", href = "/testler#mini-test" }) {
+  return (
+    <div
+      className={`rounded-2xl border border-green-200 bg-green-50 p-5 md:p-6 ${className}`.trim()}
+    >
+      <p className="text-sm font-medium uppercase tracking-wide text-green-800">
+        mini test
+      </p>
+      <h3 className="mt-2 text-xl font-semibold text-gray-900 md:text-2xl">
+        sana uygun başlangıcı birkaç soruda bul
+      </h3>
+      <p className="mt-2 text-sm text-gray-600 md:text-base">
+        kısa birkaç soruyla nerede zorlandığını daha net gör, sana uygun
+        başlangıç noktasını belirle.
+      </p>
+      <a
+        href={href}
+        className="mt-4 inline-flex items-center justify-center rounded-xl bg-green-800 px-5 py-3 font-medium text-white transition hover:bg-green-900"
+      >
+        mini testi başlat
+      </a>
+    </div>
+  );
+}
+
 export function MiniForm() {
   const [form, setForm] = useState({
     age: "",
@@ -21,7 +46,7 @@ export function MiniForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const message = `Merhaba, denge.fit üzerinden mini form doldurdum.
+    const message = `Merhaba, denge üzerinden mini form doldurdum.
 
 Yaş: ${form.age}
 Boy: ${form.height} cm
@@ -126,12 +151,30 @@ Detaylı destek almak istiyorum.`;
         </select>
       </div>
 
-      <button
-        type="submit"
-        className="w-full rounded-xl bg-neutral-900 py-3 text-sm font-medium text-white transition hover:opacity-90"
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center rounded-xl bg-green-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-green-900"
+        >
+          whatsapp
+        </button>
+
+        <span className="text-center text-sm text-neutral-400">veya</span>
+
+        <a
+          href="mailto:hello@denge.fit"
+          className="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-medium text-neutral-800 transition hover:bg-[#f3eee5]"
+        >
+          e-posta gönder
+        </a>
+      </div>
+
+      <a
+        href="mailto:hello@denge.fit"
+        className="inline-flex text-sm font-medium text-green-800 transition hover:text-green-900"
       >
-        whatsapp'a gönder
-      </button>
+        hello@denge.fit
+      </a>
 
       <p className="text-xs leading-6 text-neutral-500">
         butona bastığında bilgiler hazır mesaj olarak WhatsApp ekranında açılır.
@@ -142,7 +185,7 @@ Detaylı destek almak istiyorum.`;
 
 export function MidCTA() {
   return (
-    <div className="mt-10 rounded-3xl bg-neutral-900 p-6 text-white">
+    <div className="mt-10 rounded-3xl bg-green-800 p-6 text-white">
       <h3 className="text-xl font-semibold">bu döngüden çıkmak istiyorsan</h3>
       <p className="mt-3 text-sm leading-6 text-white/80">
         sana uygun beslenme düzenini birlikte netleştirebiliriz. hızlıca yaz,
@@ -153,9 +196,9 @@ export function MidCTA() {
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noreferrer"
-        className="mt-5 inline-block rounded-xl bg-white px-5 py-3 text-sm font-medium text-black transition hover:opacity-90"
+        className="mt-5 inline-block rounded-xl bg-white px-5 py-3 text-sm font-medium text-green-900 transition hover:bg-white/90"
       >
-        whatsapp&apos;tan yaz
+        whatsapp üzerinden iletişime geç
       </a>
     </div>
   );
@@ -177,7 +220,7 @@ export function BottomCTA() {
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noreferrer"
-        className="mt-5 inline-block rounded-xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+        className="mt-5 inline-block rounded-xl bg-green-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-green-900"
       >
         benim için uygun mu öğren
       </a>

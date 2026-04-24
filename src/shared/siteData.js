@@ -1,5 +1,5 @@
 export const WHATSAPP_LINK =
-  "https://wa.me/905050727306?text=merhaba%20denge.fit%20üzerinden%20yazıyorum";
+  "https://wa.me/905050727306?text=merhaba%20denge%20%C3%BCzerinden%20yaz%C4%B1yorum";
 
 export const guideLibrary = [
   {

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { WHATSAPP_LINK } from "./siteData";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -8,6 +7,7 @@ export function Header() {
   const navItems = [
     { to: "/", label: "ana sayfa" },
     { to: "/rehberler", label: "rehberler" },
+    { to: "/testler", label: "testler" },
     { to: "/araclar", label: "hesaplayıcılar" },
     { to: "/hakkimizda", label: "hakkımızda" },
     { to: "/iletisim", label: "iletişim" },
@@ -17,7 +17,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-black/5 bg-[#f6f1e8]/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="text-xl font-semibold tracking-tight">
-          denge.fit
+          <em className="italic">denge</em>
         </Link>
 
         <nav className="hidden gap-6 text-sm md:flex">
@@ -49,7 +49,7 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-3 py-3 transition hover:bg-black/5"
+                className="rounded-xl px-3 py-3 transition hover:bg-[#f6f1e8]"
               >
                 {item.label}
               </Link>
@@ -64,12 +64,14 @@ export function Header() {
 export function Footer() {
   return (
     <footer className="border-t border-black/5 bg-white/60">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-3">
         <div className="md:col-span-2">
-          <h3 className="text-lg font-semibold">denge.fit</h3>
+          <h3 className="text-lg font-semibold">
+            <em className="italic">denge</em>
+          </h3>
           <p className="mt-3 max-w-md text-sm leading-6 text-neutral-600">
-            sağlıklı yaşamı sadeleştiren rehberler ve pratik hesaplayıcılar. amaç,
-            insanları bilgiye boğmak değil; uygulanabilir bir başlangıç sunmak.
+            beslenme ve günlük yaşam tarafında sade rehberler, pratik araçlar,
+            testler ve uygulanabilir bir başlangıç sunar.
           </p>
         </div>
 
@@ -84,8 +86,11 @@ export function Footer() {
             <Link to="/rehberler" className="hover:opacity-70">
               rehberler
             </Link>
+            <Link to="/testler" className="hover:opacity-70">
+              testler
+            </Link>
             <Link to="/araclar" className="hover:opacity-70">
-              hesaplayıcılar
+              araçlar
             </Link>
             <Link to="/hakkimizda" className="hover:opacity-70">
               hakkımızda
@@ -95,28 +100,11 @@ export function Footer() {
             </Link>
           </div>
         </div>
-
-        <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-            iletişim
-          </h4>
-          <div className="mt-3 space-y-2 text-sm text-neutral-700">
-            <p>e-posta: denge.fit@protonmail.com</p>
-            <p>instagram: @denge.fit</p>
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block pt-1 underline underline-offset-4"
-            >
-              whatsapp
-            </a>
-          </div>
-        </div>
       </div>
 
       <div className="border-t border-black/5 px-6 py-4 text-center text-xs text-neutral-500">
-        © 2026 denge.fit — sade, uygulanabilir, sürdürülebilir.
+        © 2026 <em className="italic">denge</em> - sade, uygulanabilir,
+        sürdürülebilir.
       </div>
     </footer>
   );
