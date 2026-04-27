@@ -1,5 +1,3 @@
-import { MiniCTA } from "../shared/siteContent";
-
 const items = [
   "kısa ve net rehberlerle temel konuları anlaşılır hale getirir",
   "abartılı vaatler yerine dengeli ve gerçekçi bir yaklaşım benimser",
@@ -30,7 +28,7 @@ export default function About() {
             {items.map((item) => (
               <div
                 key={item}
-                className="rounded-xl border p-4 text-sm text-gray-700"
+                className="rounded-xl border border-black/15 bg-white p-4 text-sm font-semibold text-gray-700 transition duration-200 hover:-translate-y-1 hover:border-green-300 hover:bg-[#fcfdf9] hover:shadow-sm"
               >
                 {item}
               </div>
@@ -38,8 +36,6 @@ export default function About() {
           </div>
         </div>
       </div>
-
-      <MiniCTA className="mt-8" />
     </main>
   );
 }

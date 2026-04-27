@@ -7,7 +7,7 @@ export function MiniCTA({ className = "", href = "/testler#mini-test" }) {
     <div
       className={`rounded-2xl border border-green-200 bg-green-50 p-5 md:p-6 ${className}`.trim()}
     >
-      <p className="text-sm font-medium uppercase tracking-wide text-green-800">
+      <p className="text-sm font-medium tracking-wide text-green-800">
         mini test
       </p>
       <h3 className="mt-2 text-xl font-semibold text-gray-900 md:text-2xl">
@@ -162,7 +162,7 @@ Detaylı destek almak istiyorum.`;
         <span className="text-center text-sm text-neutral-400">veya</span>
 
         <a
-          href="mailto:hello@denge.fit"
+          href="mailto:denge.fit@protonmail.com"
           className="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-5 py-3 text-sm font-medium text-neutral-800 transition hover:bg-[#f3eee5]"
         >
           e-posta gönder
@@ -170,10 +170,10 @@ Detaylı destek almak istiyorum.`;
       </div>
 
       <a
-        href="mailto:hello@denge.fit"
+        href="mailto:denge.fit@protonmail.com"
         className="inline-flex text-sm font-medium text-green-800 transition hover:text-green-900"
       >
-        hello@denge.fit
+        denge.fit@protonmail.com
       </a>
 
       <p className="text-xs leading-6 text-neutral-500">
@@ -279,10 +279,10 @@ export function RelatedGuides({ currentSlug }) {
         {related.map((guide) => (
           <article
             key={guide.title}
-            className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+            className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
           >
             <div className={`h-28 bg-gradient-to-br ${guide.accent}`} />
-            <div className="p-5">
+            <div className="flex flex-1 flex-col p-5">
               <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
                 {guide.tag}
               </span>
@@ -294,7 +294,7 @@ export function RelatedGuides({ currentSlug }) {
               </p>
               <Link
                 to={guide.slug}
-                className="mt-4 inline-block text-sm font-medium underline underline-offset-4"
+                className="mt-auto pt-4 inline-block text-sm font-medium underline underline-offset-4"
               >
                 rehberi oku
               </Link>
@@ -308,9 +308,9 @@ export function RelatedGuides({ currentSlug }) {
 
 export function GuideCard({ guide }) {
   return (
-    <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
+    <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">
       <div className={`h-28 bg-gradient-to-br ${guide.accent}`} />
-      <div className="p-5">
+      <div className="flex flex-1 flex-col p-5">
         <span className="inline-flex rounded-full bg-[#f6f1e8] px-3 py-1 text-xs font-medium text-neutral-700">
           {guide.tag}
         </span>
@@ -320,7 +320,7 @@ export function GuideCard({ guide }) {
 
         <Link
           to={guide.slug}
-          className="mt-4 inline-block text-sm font-medium underline underline-offset-4"
+          className="mt-auto pt-4 inline-block text-sm font-medium underline underline-offset-4"
         >
           rehberi oku
         </Link>

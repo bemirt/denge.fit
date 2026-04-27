@@ -91,7 +91,7 @@ export default function MiniTestSection() {
       className="rounded-[2rem] border border-green-200/80 bg-white p-6 shadow-sm md:p-8"
     >
       <div className="max-w-2xl">
-        <p className="text-sm font-medium uppercase tracking-wide text-green-800">
+        <p className="text-sm font-medium tracking-wide text-green-800">
           mini test
         </p>
         <h2 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900 md:text-4xl">

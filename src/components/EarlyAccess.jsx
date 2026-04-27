@@ -18,17 +18,19 @@ function EarlyAccess() {
 
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="mailto:hello@denge.fit"
+            href="mailto:denge.fit@protonmail.com"
             className="inline-flex min-w-[210px] items-center justify-center rounded-full bg-green-800 px-6 py-3 text-sm font-semibold !text-white whitespace-nowrap transition hover:bg-green-900"
           >
-            hello@denge.fit
+            denge.fit@protonmail.com
           </a>
 
           <a
-            href="#"
+            href="https://www.instagram.com/denge.fit/"
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex min-w-[210px] items-center justify-center rounded-full border border-[var(--color-border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--color-text)] transition hover:bg-[var(--color-surface)]"
           >
-            instagram yakında
+            instagram üzerinden takip et
           </a>
         </div>
       </div>

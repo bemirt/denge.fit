@@ -158,7 +158,7 @@ export default function Home() {
             {featureItems.map((item) => (
               <div
                 key={item}
-                className="rounded-xl border p-4 text-sm text-gray-700"
+                className="rounded-xl border border-black/15 bg-white p-4 text-sm font-semibold text-gray-700 transition duration-200 hover:-translate-y-1 hover:border-green-300 hover:bg-[#fcfdf9] hover:shadow-sm"
               >
                 {item}
               </div>

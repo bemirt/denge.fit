@@ -30,10 +30,10 @@ export default function Contact() {
 
             <div className="mt-6 flex flex-col gap-3">
               <a
-                href="mailto:hello@denge.fit"
+                href="mailto:denge.fit@protonmail.com"
                 className="inline-flex items-center justify-center rounded-2xl bg-green-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-green-900"
               >
-                hello@denge.fit
+                denge.fit@protonmail.com
               </a>
 
               <a
@@ -61,18 +61,23 @@ export default function Contact() {
               <div className="rounded-2xl border border-black/5 bg-[#fcfaf6] p-4">
                 <p className="text-sm font-medium text-neutral-500">e-posta</p>
                 <a
-                  href="mailto:hello@denge.fit"
+                  href="mailto:denge.fit@protonmail.com"
                   className="mt-2 inline-flex text-base font-medium text-neutral-900 transition hover:text-green-800"
                 >
-                  hello@denge.fit
+                  denge.fit@protonmail.com
                 </a>
               </div>
 
               <div className="rounded-2xl border border-black/5 bg-[#fcfaf6] p-4">
                 <p className="text-sm font-medium text-neutral-500">instagram</p>
-                <p className="mt-2 text-base font-medium text-neutral-900">
+                <a
+                  href="https://www.instagram.com/denge.fit/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 inline-flex text-base font-medium text-neutral-900 transition hover:text-green-800"
+                >
                   instagram üzerinden takip et
-                </p>
+                </a>
               </div>
             </div>
           </div>

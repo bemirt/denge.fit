@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { WHATSAPP_LINK } from "./siteData";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -64,8 +65,8 @@ export function Header() {
 export function Footer() {
   return (
     <footer className="border-t border-black/5 bg-white/60">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-3">
-        <div className="md:col-span-2">
+      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 lg:grid-cols-[1.2fr_0.8fr_1fr]">
+        <div>
           <h3 className="text-lg font-semibold">
             <em className="italic">denge</em>
           </h3>
@@ -75,7 +76,7 @@ export function Footer() {
           </p>
         </div>
 
-        <div>
+        <div className="lg:justify-self-center">
           <h4 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
             menü
           </h4>
@@ -98,6 +99,43 @@ export function Footer() {
             <Link to="/iletisim" className="hover:opacity-70">
               iletişim
             </Link>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
+            iletişim
+          </h4>
+          <div className="mt-3 space-y-3">
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-between rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-900 transition hover:-translate-y-0.5 hover:bg-green-100/80"
+            >
+              <span>whatsapp</span>
+              <span className="text-xs text-green-700">hemen yaz</span>
+            </a>
+
+            <a
+              href="mailto:denge.fit@protonmail.com"
+              className="flex items-center justify-between rounded-2xl border border-black/5 bg-white px-4 py-3 text-sm font-medium text-neutral-900 transition hover:-translate-y-0.5 hover:border-green-200 hover:bg-[#fcfaf6]"
+            >
+              <span>mail</span>
+              <span className="text-xs text-neutral-500">
+                denge.fit@protonmail.com
+              </span>
+            </a>
+
+            <a
+              href="https://www.instagram.com/denge.fit/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-between rounded-2xl border border-black/5 bg-white px-4 py-3 text-sm font-medium text-neutral-900 transition hover:-translate-y-0.5 hover:border-green-200 hover:bg-[#fcfaf6]"
+            >
+              <span>instagram</span>
+              <span className="text-xs text-neutral-500">@denge.fit</span>
+            </a>
           </div>
         </div>
       </div>

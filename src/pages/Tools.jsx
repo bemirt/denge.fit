@@ -1,6 +1,5 @@
 import Calculator from "../components/Calculator";
 import WaterCalculator from "../components/WaterCalculator";
-import { MiniCTA } from "../shared/siteContent";
 
 export default function Tools() {
   return (
@@ -17,8 +16,6 @@ export default function Tools() {
         temel ihtiyaçlarını kısa sürede görerek daha bilinçli bir başlangıç
         yapmana yardımcı olur.
       </p>
-
-      <MiniCTA className="mt-8 max-w-md" />
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         <Calculator />
